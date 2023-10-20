@@ -4,7 +4,7 @@ import SidebarProfile from "./SidebarProfile";
 
 const Sidebar = () => {
   return (
-    <div className="min-w-[16rem] sticky top-0 flex flex-col justify-between border-e bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-gray-100 h-full select-none">
+    <div className="min-w-[18rem] sticky top-0 flex flex-col justify-between border-e bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-gray-100 h-full select-none">
       <div className="px-4 py-6">
         {/* <Link
           to={"/"}
@@ -16,7 +16,7 @@ const Sidebar = () => {
         <ul className="mt-6 space-y-3">
           <h1>search bar here after</h1>
           {routes.map((route) => (
-            <SidebarItem key={route.index} path={route.path}>
+            <SidebarItem key={route.index} path={route.path} Icon={route.icon}>
               {route.name}
             </SidebarItem>
           ))}

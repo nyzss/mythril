@@ -1,3 +1,5 @@
+import { LucideIcon } from "lucide-react";
+
 type ColorMode = "light" | "dark";
 
 type CoverResolution = "original" | "medium" | "low";
@@ -7,6 +9,7 @@ interface TRoutes {
   path: string;
   element: ReactNode;
   index: number;
+  icon: LucideIcon;
   child?: Child;
 }
 

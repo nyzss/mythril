@@ -1,3 +1,8 @@
+import {
+  Home as HomeIcon,
+  Library as LibraryIcon,
+  Newspaper,
+} from "lucide-react";
 import Home from "../pages/Home";
 import Library from "../pages/Library";
 import Manga from "../pages/Manga";
@@ -9,12 +14,14 @@ const routes: TRoutes[] = [
     path: "/",
     element: <Home />,
     index: 1,
+    icon: HomeIcon,
   },
   {
     name: "Library",
     path: "/library",
     element: <Library />,
     index: 2,
+    icon: LibraryIcon,
     child: { element: <Manga />, param: ":mangaId" },
   },
   {
@@ -22,6 +29,7 @@ const routes: TRoutes[] = [
     path: "/updated",
     element: <Home />,
     index: 3,
+    icon: Newspaper,
   },
 ];
 
