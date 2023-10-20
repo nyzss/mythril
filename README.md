@@ -1,7 +1,8 @@
-# Tauri + React + Typescript
+## Desktop Manga Reader
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+I wanted to have a good desktop manga reader for multiple reasons. mainly is to easily download chapters I want to read offline, I also wanted an app to keep track of where I left reading.
 
-## Recommended IDE Setup
+I'd like to precise that this is mainly for education purposes, I am learning a good amount of stuff from this project so I may not be perfect in my programming. 
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+##### All API credits goes to [Mangadex](https://api.mangadex.org/) who did an amazing job putting together this fabulous api.
+
