@@ -6,7 +6,7 @@ const fetchMangas = async (): Promise<TManga[]> => {
   const baseUrl = "https://api.mangadex.org/manga";
   const limit: number = 10;
   const offset: number = 0;
-  const includes: string[] = ["cover_art"];
+  const includes: string[] = ["cover_art", "artist", "author"];
   const contentRating: string[] = ["safe"];
 
   const fetchUrl = createFetchUrl(

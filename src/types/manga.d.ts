@@ -168,9 +168,11 @@ export interface TagAttributes {
   name: Name;
   description: FluffyDescription;
   // group: Group;
-  group: "content" | "format" | "genre" | "theme";
+  group: Group;
   version: number;
 }
+
+export type Group = "content" | "format" | "genre" | "theme";
 
 export interface FluffyDescription {}
 
@@ -345,10 +347,9 @@ export enum Role {
   RoleUser = "ROLE_USER",
 }
 
-export enum RelationshipType {
-  Artist = "artist",
-  Author = "author",
-  CoverArt = "cover_art",
-  Creator = "creator",
-  Manga = "manga",
-}
+export type RelationshipType =
+  | "artist"
+  | "author"
+  | "cover_art"
+  | "creator"
+  | "manga";

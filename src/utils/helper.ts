@@ -1,3 +1,4 @@
+import { Group, Relationship, Tag } from "../types/manga";
 import { CoverResolution } from "../types/types";
 
 const createFetchUrl = (
@@ -44,4 +45,12 @@ const createCoverUrl = ({
   return coverUrl;
 };
 
-export { createFetchUrl, createCoverUrl };
+const tagFilter = (tag: Tag[], filter: Group) => {
+  return tag.filter((el) => el.attributes.group === filter);
+};
+
+const tagCheck = (relation: Tag[] | Relationship[]): relation is Tag[] => {
+  return relation.some((rel) => rel.type === "tag");
+};
+
+export { createFetchUrl, createCoverUrl, tagFilter, tagCheck };

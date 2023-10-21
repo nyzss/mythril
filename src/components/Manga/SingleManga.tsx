@@ -1,8 +1,8 @@
 // import { Tab } from "@headlessui/react";
-import { createCoverUrl } from "../../utils/helper";
+import { createCoverUrl, tagFilter } from "../../utils/helper";
 import Markdown from "react-markdown";
 import { TManga } from "../../types/manga";
-import TagSection from "./TagSection";
+import MangaRelations from "./MangaRelations";
 
 const SingleManga = ({ manga }: { manga: TManga }) => {
   if (!manga) return <>Loading...</>;
@@ -13,19 +13,12 @@ const SingleManga = ({ manga }: { manga: TManga }) => {
   const placeholderImg = "https://placehold.co/400x600";
 
   const attributes = manga.attributes;
+  const tags = manga.attributes.tags;
 
-  const genres = attributes.tags.filter(
-    (tag) => tag.attributes.group === "genre"
-  );
-  const formats = attributes.tags.filter(
-    (tag) => tag.attributes.group === "format"
-  );
-  const themes = attributes.tags.filter(
-    (tag) => tag.attributes.group === "theme"
-  );
-  const contents = attributes.tags.filter(
-    (tag) => tag.attributes.group === "content"
-  );
+  const genres = tagFilter(tags, "genre");
+  const themes = tagFilter(tags, "theme");
+  const formats = tagFilter(tags, "format");
+  const contents = tagFilter(tags, "content");
 
   const coverUrl = coverRelation?.attributes?.fileName
     ? createCoverUrl({
@@ -35,8 +28,11 @@ const SingleManga = ({ manga }: { manga: TManga }) => {
       })
     : placeholderImg;
 
+  const artist = manga.relationships.filter((rel) => rel.type === "artist");
+  const author = manga.relationships.filter((rel) => rel.type === "author");
+
   return (
-    <div className="py-8">
+    <div className="py-8 mx-auto">
       <div className="h-full max-w-6xl px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-bold text-rose-500 dark:text-rose-400 mb-2">
           {attributes.title.en ? attributes.title.en : attributes.title.ja}
@@ -56,10 +52,18 @@ const SingleManga = ({ manga }: { manga: TManga }) => {
               {attributes.title.en ? attributes.title.ja : attributes.title.en}
             </p>
             <div className="flex flex-col">
-              <TagSection tagContent={genres}>Genres</TagSection>
-              <TagSection tagContent={formats}>Formats</TagSection>
-              <TagSection tagContent={themes}>Themes</TagSection>
-              <TagSection tagContent={contents}>Contents</TagSection>
+              <MangaRelations relations={contents}>Contents</MangaRelations>
+              <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+              <div className="flex flex-row gap-2">
+                <MangaRelations relations={artist}>Artist</MangaRelations>
+                <MangaRelations relations={author}>Author</MangaRelations>
+              </div>
+              <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+              <MangaRelations relations={genres}>Genres</MangaRelations>
+              <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+              <MangaRelations relations={themes}>Themes</MangaRelations>
+              <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+              <MangaRelations relations={formats}>Formats</MangaRelations>
             </div>
           </div>
         </div>
