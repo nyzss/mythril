@@ -167,18 +167,20 @@ export interface Tag {
 export interface TagAttributes {
   name: Name;
   description: FluffyDescription;
-  group: Group;
+  // group: Group;
+  group: "content" | "format" | "genre" | "theme";
   version: number;
 }
 
 export interface FluffyDescription {}
 
-export enum Group {
-  Content = "content",
-  Format = "format",
-  Genre = "genre",
-  Theme = "theme",
-}
+// makes my vite weirdly crash??
+// export enum Group {
+//   Content = "content",
+//   Format = "format",
+//   Genre = "genre",
+//   Theme = "theme",
+// }
 
 export interface Name {
   en: string;
