@@ -2,6 +2,7 @@
 import { createCoverUrl } from "../../utils/helper";
 import Markdown from "react-markdown";
 import { TManga } from "../../types/manga";
+import TagSection from "./TagSection";
 
 const SingleManga = ({ manga }: { manga: TManga }) => {
   if (!manga) return <>Loading...</>;
@@ -21,6 +22,9 @@ const SingleManga = ({ manga }: { manga: TManga }) => {
   );
   const themes = attributes.tags.filter(
     (tag) => tag.attributes.group === "theme"
+  );
+  const contents = attributes.tags.filter(
+    (tag) => tag.attributes.group === "content"
   );
 
   const coverUrl = coverRelation?.attributes?.fileName
@@ -51,30 +55,12 @@ const SingleManga = ({ manga }: { manga: TManga }) => {
             <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
               {attributes.title.en ? attributes.title.ja : attributes.title.en}
             </p>
-            <ul className="flex flex-col">
-              <h1 className="font-bold text-rose-400 dark:text-rose-300 text-xl">
-                formats
-              </h1>
-              {formats.map((format) => (
-                <li key={format.id}>{format.attributes.name.en}</li>
-              ))}
-
-              <h1 className="font-bold text-rose-400 dark:text-rose-300 text-xl">
-                themes
-              </h1>
-              {themes.map((theme) => (
-                <li key={theme.id}>
-                  <h1>{theme.attributes.name.en}</h1>
-                </li>
-              ))}
-
-              <h1 className="font-bold text-rose-400 dark:text-rose-300 text-xl">
-                genres
-              </h1>
-              {genres.map((genre) => (
-                <li key={genre.id}>{genre.attributes.name.en}</li>
-              ))}
-            </ul>
+            <div className="flex flex-col">
+              <TagSection tagContent={genres}>Genres</TagSection>
+              <TagSection tagContent={formats}>Formats</TagSection>
+              <TagSection tagContent={themes}>Themes</TagSection>
+              <TagSection tagContent={contents}>Contents</TagSection>
+            </div>
           </div>
         </div>
         <div className="flex flex-col gap-3">
