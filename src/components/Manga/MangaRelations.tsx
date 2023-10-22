@@ -1,39 +1,34 @@
-import { Relationship, Tag } from "../../types/manga";
-import { tagCheck } from "../../utils/helper";
-import Relation from "./Relation";
+import Relations from "./Relations";
+import { relationFilter } from "../../utils/helper";
+import { TManga } from "../../types/manga";
 
-const MangaRelations = ({
-  children,
-  relations,
-}: {
-  children: string;
-  relations: Tag[] | Relationship[];
-}) => {
-  const isTag = tagCheck(relations);
-  const isEmpty = !relations.some((rel) => rel.type);
+const MangaRelations = ({ manga }: { manga: TManga }) => {
+  const tags = manga.attributes.tags;
+  const relationships = manga.relationships;
+
+  const genres = relationFilter(tags, "genre");
+  const themes = relationFilter(tags, "theme");
+  const formats = relationFilter(tags, "format");
+  const contents = relationFilter(tags, "content");
+
+  const artist = relationFilter(relationships, "artist");
+  const author = relationFilter(relationships, "author");
+
   return (
-    <ul>
-      <h1
-        className={`font-bold text-rose-400 dark:text-rose-500 text-xl ${
-          isEmpty ? "text-neutral-400 dark:text-neutral-500" : ""
-        }`}
-      >
-        {children}
-      </h1>
+    <>
+      <Relations relations={contents}>Contents</Relations>
+      <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
       <div className="flex flex-row gap-2">
-        {isTag &&
-          relations.map((content) => (
-            <Relation key={content.id}>{content.attributes.name.en}</Relation>
-          ))}
-        {isEmpty && (
-          <h1 className="text-neutral-400 dark:text-neutral-600">N/A</h1>
-        )}
-        {!isTag &&
-          relations.map((content) => (
-            <Relation key={content.id}>{content.attributes?.name}</Relation>
-          ))}
+        <Relations relations={artist}>Artist</Relations>
+        <Relations relations={author}>Author</Relations>
       </div>
-    </ul>
+      <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+      <Relations relations={genres}>Genres</Relations>
+      <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+      <Relations relations={themes}>Themes</Relations>
+      <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+      <Relations relations={formats}>Formats</Relations>
+    </>
   );
 };
 
