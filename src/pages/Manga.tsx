@@ -1,21 +1,18 @@
 import { useParams } from "react-router-dom";
 import SingleManga from "../components/Manga/SingleManga";
-import { useMangas } from "../utils/hooks";
+import { useSingleManga } from "../utils/hooks";
 
 const Manga = () => {
-  const params = useParams();
-  const { data: mangas, isLoading } = useMangas();
+  const { mangaId } = useParams();
+  if (!mangaId) return <>Couldn't find what you're looking for.</>;
+  const { data: mangas, isLoading } = useSingleManga(mangaId);
 
   if (isLoading) return <>Loading...</>;
 
-  const matchedManga = mangas?.filter(
-    (manga) => manga.id === params.mangaId
-  )[0];
-
   return (
-    <div>
-      <SingleManga manga={matchedManga!} />
-    </div>
+    <>
+      <SingleManga manga={mangas!} />
+    </>
   );
 };
 

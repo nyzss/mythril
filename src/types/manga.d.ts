@@ -76,11 +76,7 @@ export interface AltTitle {
   hr?: string;
 }
 
-export enum ContentRating {
-  Erotica = "erotica",
-  Safe = "safe",
-  Suggestive = "suggestive",
-}
+export type ContentRating = "erotica" | "safe" | "suggestive";
 
 export interface PurpleDescription {
   en?: string;
@@ -203,6 +199,13 @@ export interface Relationship {
   attributes?: RelationshipAttributes;
   related?: string;
 }
+
+export type RelationshipType =
+  | "artist"
+  | "author"
+  | "cover_art"
+  | "creator"
+  | "manga";
 
 export interface RelationshipAttributes {
   name?: string;
@@ -346,10 +349,3 @@ export enum Role {
   RoleStaff = "ROLE_STAFF",
   RoleUser = "ROLE_USER",
 }
-
-export type RelationshipType =
-  | "artist"
-  | "author"
-  | "cover_art"
-  | "creator"
-  | "manga";

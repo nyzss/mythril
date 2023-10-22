@@ -1,13 +1,9 @@
-import { Group, Relationship, Tag } from "../types/manga";
-import { CoverResolution } from "../types/types";
+import { Group, Relationship, RelationshipType, Tag } from "../types/manga";
+import { Config, CoverResolution } from "../types/types";
 
-const createFetchUrl = (
-  baseUrl: string,
-  limit: number = 10,
-  offset: number = 0,
-  contentRating?: string[],
-  includes?: string[]
-): string => {
+const createFetchUrl = (baseUrl: string, config: Config): string => {
+  const { limit, offset, includes, contentRating } = config;
+
   const includesStr = includes
     ? `&includes[]=${includes.join("&includes[]=")}`
     : "";
@@ -21,6 +17,16 @@ const createFetchUrl = (
   console.log(fetchUrl);
 
   return fetchUrl;
+};
+
+const createSingleFetchUrl = (baseUrl: string, config: Config) => {
+  const { includes } = config;
+
+  const includesStr = includes
+    ? `&includes[]=${includes.join("&includes[]=")}`
+    : "";
+
+  return `${baseUrl}?${includesStr}`;
 };
 
 const createCoverUrl = ({
@@ -45,12 +51,24 @@ const createCoverUrl = ({
   return coverUrl;
 };
 
-const tagFilter = (tag: Tag[], filter: Group) => {
-  return tag.filter((el) => el.attributes.group === filter);
+const relationFilter = (
+  relation: Tag[] | Relationship[],
+  filter: Group | RelationshipType
+) => {
+  if (tagCheck(relation))
+    return relation.filter((el) => el.attributes.group === filter);
+
+  return relation.filter((rel) => rel.type === filter);
 };
 
 const tagCheck = (relation: Tag[] | Relationship[]): relation is Tag[] => {
   return relation.some((rel) => rel.type === "tag");
 };
 
-export { createFetchUrl, createCoverUrl, tagFilter, tagCheck };
+export {
+  createFetchUrl,
+  createCoverUrl,
+  tagCheck,
+  relationFilter,
+  createSingleFetchUrl,
+};

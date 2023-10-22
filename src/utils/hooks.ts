@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchMangas } from "./api";
+import { fetchMangas, fetchChapters, fetchSingleManga } from "./api";
 
 const useMangas = () => {
   return useQuery({
@@ -8,4 +8,18 @@ const useMangas = () => {
   });
 };
 
-export { useMangas };
+const useSingleManga = (mangaId: string) => {
+  return useQuery({
+    queryKey: ["mangas", mangaId],
+    queryFn: () => fetchSingleManga(mangaId),
+  });
+};
+
+const useChapters = (mangaId: string) => {
+  return useQuery({
+    queryKey: ["chapters", mangaId],
+    queryFn: () => fetchChapters(mangaId),
+  });
+};
+
+export { useMangas, useChapters, useSingleManga };

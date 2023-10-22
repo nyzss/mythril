@@ -1,10 +1,11 @@
 import { LucideIcon } from "lucide-react";
+import { ContentRating, RelationshipType } from "./manga";
 
-type ColorMode = "light" | "dark";
+export type ColorMode = "light" | "dark";
 
-type CoverResolution = "original" | "medium" | "low";
+export type CoverResolution = "original" | "medium" | "low";
 
-interface TRoutes {
+export interface TRoutes {
   name: string;
   path: string;
   element: ReactNode;
@@ -13,9 +14,14 @@ interface TRoutes {
   child?: Child;
 }
 
-interface Child {
+export interface Child {
   element: ReactNode;
   param: string;
 }
 
-export { ColorMode, TRoutes, CoverResolution };
+export interface Config {
+  limit?: number;
+  offset?: number;
+  includes?: RelationshipType[];
+  contentRating?: ContentRating[];
+}

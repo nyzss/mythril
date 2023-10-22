@@ -10,7 +10,7 @@ const MainNav = ({ children }: { children: React.ReactNode }) => {
           <div className="flex-initial">
             <TitleBar />
           </div>
-          <div className="flex flex-row overflow-auto border-t-2 dark:border-neutral-900 h-full">
+          <div className="flex flex-row overflow-auto border-t-2 dark:border-neutral-900 dark:bg-neutral-950/50 h-full">
             <Sidebar />
             {children}
           </div>
