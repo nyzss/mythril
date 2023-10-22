@@ -1,7 +1,10 @@
 import { Group, Relationship, RelationshipType, Tag } from "../types/manga";
 import { Config, CoverResolution } from "../types/types";
 
-const createFetchUrl = (baseUrl: string, config: Config): string => {
+// export const RUNNING_IN_TAURI = window.__TAURI__ !== undefined;
+export const RUNNING_IN_TAURI = "__TAURI__" in window;
+
+export const createFetchUrl = (baseUrl: string, config: Config): string => {
   const { limit, offset, includes, contentRating } = config;
 
   const includesStr = includes
@@ -19,7 +22,7 @@ const createFetchUrl = (baseUrl: string, config: Config): string => {
   return fetchUrl;
 };
 
-const createSingleFetchUrl = (baseUrl: string, config: Config) => {
+export const createSingleFetchUrl = (baseUrl: string, config: Config) => {
   const { includes } = config;
 
   const includesStr = includes
@@ -29,7 +32,7 @@ const createSingleFetchUrl = (baseUrl: string, config: Config) => {
   return `${baseUrl}?${includesStr}`;
 };
 
-const createCoverUrl = ({
+export const createCoverUrl = ({
   mangaId,
   coverFileName,
   resolution = "original",
@@ -51,7 +54,7 @@ const createCoverUrl = ({
   return coverUrl;
 };
 
-const relationFilter = (
+export const relationFilter = (
   relation: Tag[] | Relationship[],
   filter: Group | RelationshipType
 ) => {
@@ -61,14 +64,8 @@ const relationFilter = (
   return relation.filter((rel) => rel.type === filter);
 };
 
-const tagCheck = (relation: Tag[] | Relationship[]): relation is Tag[] => {
+export const tagCheck = (
+  relation: Tag[] | Relationship[]
+): relation is Tag[] => {
   return relation.some((rel) => rel.type === "tag");
-};
-
-export {
-  createFetchUrl,
-  createCoverUrl,
-  tagCheck,
-  relationFilter,
-  createSingleFetchUrl,
 };

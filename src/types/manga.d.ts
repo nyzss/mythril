@@ -125,33 +125,20 @@ export interface Links {
   engtl?: string;
 }
 
-export enum OriginalLanguage {
-  En = "en",
-  Fr = "fr",
-  ID = "id",
-  Ja = "ja",
-  Ko = "ko",
-  Zh = "zh",
-  ZhHk = "zh-hk",
-}
+export type OriginalLanguage =
+  | "en"
+  | "fr"
+  | "id"
+  | "ja"
+  | "ko"
+  | "zh"
+  | "zh-hk";
 
-export enum PublicationDemographic {
-  Josei = "josei",
-  Seinen = "seinen",
-  Shoujo = "shoujo",
-  Shounen = "shounen",
-}
+export type PublicationDemographic = "josei" | "seinen" | "shoujo" | "shounen";
 
-export enum State {
-  Published = "published",
-}
+export type State = "published";
 
-export enum Status {
-  Cancelled = "cancelled",
-  Completed = "completed",
-  Hiatus = "hiatus",
-  Ongoing = "ongoing",
-}
+export type Status = "cancelled" | "completed" | "hiatus" | "ongoing";
 
 export interface Tag {
   id: string;
