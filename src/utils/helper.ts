@@ -2,34 +2,25 @@ import { Group, Relationship, RelationshipType, Tag } from "../types/manga";
 import { Config, CoverResolution } from "../types/types";
 
 // export const RUNNING_IN_TAURI = window.__TAURI__ !== undefined;
-export const RUNNING_IN_TAURI = "__TAURI__" in window;
+export const RUNNING_IN_TAURI = "__TAURI_METADATA__" in window;
 
-export const createFetchUrl = (baseUrl: string, config: Config): string => {
-  const { limit, offset, includes, contentRating } = config;
+export const createFetchUrl = (config: Config) => {
+  const { url, limit, offset, contentRating, includes } = config;
 
-  const includesStr = includes
+  const includesValue = includes
     ? `&includes[]=${includes.join("&includes[]=")}`
     : "";
 
-  const contentRatingStr = contentRating
+  const contentRatingValue = contentRating
     ? `&contentRating[]=${contentRating.join("&contentRating[]=")}`
     : "";
 
-  const fetchUrl = `${baseUrl}?limit=${limit}&offset=${offset}${includesStr}${contentRatingStr}`;
+  const limitValue = limit ? `&limit=${limit}` : "";
+  const offsetValue = offset ? `&offset=${offset}` : "";
 
-  console.log(fetchUrl);
+  const fetchUrl = `${url}?${includesValue}${contentRatingValue}${limitValue}${offsetValue}`;
 
   return fetchUrl;
-};
-
-export const createSingleFetchUrl = (baseUrl: string, config: Config) => {
-  const { includes } = config;
-
-  const includesStr = includes
-    ? `&includes[]=${includes.join("&includes[]=")}`
-    : "";
-
-  return `${baseUrl}?${includesStr}`;
 };
 
 export const createCoverUrl = ({

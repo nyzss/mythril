@@ -18,20 +18,21 @@ const MangaCard = ({ manga }: { manga: TManga }) => {
     : placeholderImg;
 
   return (
-    <div key={manga.id} className="cursor-pointer max-h-96 relative">
-      <Link to={`/library/${manga.id}`}>
-        <img
-          src={coverUrl}
-          className="rounded-md"
-          alt={manga.attributes.title.en}
-        />
-        <div className="opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black/70 rounded-md absolute bottom-0 px-4 py-3 w-full h-full flex justify-center items-center">
-          <h1 className="text-neutral-50 font-semibold text-2xl">
-            {manga.attributes.title.en}
-          </h1>
-        </div>
-      </Link>
-    </div>
+    <Link
+      to={"/library/" + manga.id}
+      className="flex justify-center items-center overflow-hidden w-72 relative"
+    >
+      <img
+        src={coverUrl}
+        className="rounded-md shrink-0 w-full h-full object-cover"
+        alt={manga.attributes.title.en}
+      />
+      <div className="opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black/80 rounded-md absolute bottom-0 px-4 py-3 w-full h-full flex justify-center items-center">
+        <h1 className="text-neutral-50 font-semibold text-2xl">
+          {manga.attributes.title.en}
+        </h1>
+      </div>
+    </Link>
   );
 };
 

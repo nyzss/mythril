@@ -8,9 +8,9 @@ const Library = () => {
     return <h1 className="text-4xl font-bold text-indigo-800">Loading...</h1>;
 
   return (
-    <div className="mx-auto my-12 grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8">
+    <div className="my-12 flex flex-row flex-wrap gap-8 mx-auto basis-3/5">
       {mangas!.map((manga) => (
-        <MangaCard manga={manga} key={manga.id} />
+        <MangaCard manga={manga} />
       ))}
     </div>
   );

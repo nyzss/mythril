@@ -1,13 +1,18 @@
-import { FetchOptions, fetch } from "@tauri-apps/api/http";
+import { FetchOptions, fetch as fetchTauri } from "@tauri-apps/api/http";
 import { TManga } from "../types/manga";
-import { createFetchUrl, createSingleFetchUrl } from "./helper";
+import { RUNNING_IN_TAURI, createFetchUrl } from "./helper";
 import { TChapter } from "../types/chapter";
 import { Config } from "../types/types";
 
-const apiUrl = "https://api.mangadex.org";
+const bai = "https://bai-hwge.onrender.com";
+const baseApi = "https://api.mangadex.org";
+
+const apiUrl = RUNNING_IN_TAURI ? baseApi : `${bai}/${baseApi}`;
+
 const userAgent = { "User-Agent": "Mythril / 0.1" };
 
 const defaultConfig: Config = {
+  url: apiUrl,
   limit: 10,
   offset: 0,
   contentRating: [],
@@ -26,26 +31,45 @@ const fetchMangas = async (): Promise<TManga[]> => {
     ...defaultConfig,
     includes: ["cover_art", "artist", "author"],
     contentRating: ["safe"],
+    url: baseUrl,
   };
+  console.log("fetchMangas called");
 
-  const fetchUrl = createFetchUrl(baseUrl, config);
+  console.log(RUNNING_IN_TAURI);
 
-  return await fetch(fetchUrl, fetchConfig)
-    .then((res: any) => res.data.data)
+  const fetchUrl = createFetchUrl(config);
+
+  const fetchFnTauri = await fetchTauri(fetchUrl, fetchConfig)
+    .then((res: any) => {
+      console.log(res);
+      return res.data.data;
+    })
     .then((res: TManga[]) => {
       console.log(res);
       return res;
     });
+
+  const fetchFnBrowser = await fetch(fetchUrl)
+    .then((res: any) => res.json())
+    .then((res: any) => res.data)
+    .then((res: TManga[]) => res);
+
+  console.log("this func got called");
+
+  return RUNNING_IN_TAURI ? fetchFnTauri : fetchFnBrowser;
 };
 
 const fetchSingleManga = async (mangaId: string) => {
   const baseUrl = `${apiUrl}/manga/${mangaId}`;
 
-  const fetchUrl = createSingleFetchUrl(baseUrl, {
+  console.log("fetchSingleManga called");
+
+  const fetchUrl = createFetchUrl({
+    url: baseUrl,
     includes: ["cover_art", "artist", "author", "creator"],
   });
 
-  return await fetch(fetchUrl, fetchConfig)
+  return await fetchTauri(fetchUrl, fetchConfig)
     .then((res: any) => res.data.data)
     .then((res: TManga) => {
       console.log(res);
@@ -56,7 +80,14 @@ const fetchSingleManga = async (mangaId: string) => {
 const fetchChapters = async (mangaId: string): Promise<TChapter[]> => {
   const baseUrl = `${apiUrl}/manga/${mangaId}/feed`;
 
-  return await fetch(baseUrl, {
+  const fetchUrl = createFetchUrl({
+    url: baseUrl,
+    includes: ["scanlation_group"],
+  });
+
+  console.log("fetchChapters called");
+
+  return await fetchTauri(fetchUrl, {
     method: "GET",
     timeout: 30,
     headers: userAgent,

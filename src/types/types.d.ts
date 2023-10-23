@@ -1,5 +1,6 @@
 import { LucideIcon } from "lucide-react";
 import { ContentRating, RelationshipType } from "./manga";
+import { ChapterRelationshipType } from "./chapter";
 
 export type ColorMode = "light" | "dark";
 
@@ -20,8 +21,9 @@ export interface Child {
 }
 
 export interface Config {
+  url: string;
   limit?: number;
   offset?: number;
-  includes?: RelationshipType[];
+  includes?: RelationshipType[] | ChapterRelationshipType[];
   contentRating?: ContentRating[];
 }

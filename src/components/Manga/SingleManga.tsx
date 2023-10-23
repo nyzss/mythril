@@ -23,10 +23,10 @@ const SingleManga = ({ manga }: { manga: TManga }) => {
     : placeholderImg;
 
   return (
-    <div className="2xl:mx-auto py-8">
-      <div className="h-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col 2xl:flex-row 2xl:gap-8 2xl:overflow-auto">
+    <div className="py-8">
+      <div className="h-full px-4 sm:px-6 lg:px-8 flex flex-col 2xl:flex-row 2xl:gap-8 2xl:overflow-auto space-y-4">
         {/* first container */}
-        <div className="2xl:sticky top-0 h-full flex-none">
+        <div className="2xl:sticky 2xl:top-0 2xl:h-full flex-none space-y-3">
           <h1 className="text-xs text-neutral-500">{manga.id}</h1>
           <h2 className="text-3xl font-bold text-rose-500 dark:text-rose-400 mb-2">
             {attributes.title.en ? attributes.title.en : attributes.title.ja}
@@ -41,15 +41,8 @@ const SingleManga = ({ manga }: { manga: TManga }) => {
                 />
               </div>
             </div>
-            <div className="md:flex-1 px-4 my-auto">
-              <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
-                {attributes.title.en
-                  ? attributes.title.ja
-                  : attributes.title.en}
-              </p>
-              <div className="flex flex-col">
-                <MangaRelations manga={manga} />
-              </div>
+            <div className="md:flex-1 px-4 flex flex-col">
+              <MangaRelations manga={manga} />
             </div>
           </div>
           <div className="flex flex-col gap-3">
