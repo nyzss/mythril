@@ -1,5 +1,5 @@
 import MangaCard from "../components/Manga/MangaCard";
-import { useMangas } from "../utils/hooks";
+import { useMangas } from "../utils/queries";
 
 const Library = () => {
   const { data: mangas, isLoading } = useMangas();

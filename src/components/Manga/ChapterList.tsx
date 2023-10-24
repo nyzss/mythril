@@ -1,4 +1,4 @@
-import { useChapters } from "../../utils/hooks";
+import { useChapters } from "../../utils/queries";
 import ChapterItem from "./ChapterItem";
 
 const ChapterList = ({ mangaId }: { mangaId: string }) => {
