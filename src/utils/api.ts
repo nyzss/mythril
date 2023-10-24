@@ -13,7 +13,7 @@ const userAgent = { "User-Agent": "Mythril / 0.1" };
 
 const defaultConfig: Config = {
   url: apiUrl,
-  limit: 10,
+  limit: 20,
   offset: 0,
   contentRating: [],
   includes: [],

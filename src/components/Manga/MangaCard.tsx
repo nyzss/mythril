@@ -20,7 +20,7 @@ const MangaCard = ({ manga }: { manga: TManga }) => {
   return (
     <Link
       to={"/library/" + manga.id}
-      className="flex justify-center items-center overflow-hidden w-72 relative"
+      className="flex justify-center items-center overflow-hidden w-64 relative"
     >
       <img
         src={coverUrl}

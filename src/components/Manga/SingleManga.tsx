@@ -24,7 +24,7 @@ const SingleManga = ({ manga }: { manga: TManga }) => {
 
   return (
     <div className="py-8">
-      <div className="h-full px-4 sm:px-6 lg:px-8 flex flex-col 2xl:flex-row 2xl:gap-8 2xl:overflow-auto space-y-4">
+      <div className="h-full px-8 flex flex-col 2xl:flex-row 2xl:gap-8 2xl:overflow-auto space-y-4">
         {/* first container */}
         <div className="2xl:sticky 2xl:top-0 2xl:h-full flex-none space-y-3">
           <h1 className="text-xs text-neutral-500">{manga.id}</h1>
@@ -55,7 +55,7 @@ const SingleManga = ({ manga }: { manga: TManga }) => {
           </div>
         </div>
         {/* second container */}
-        <div className="max-w-7xl flex-none 2xl:mt-16">
+        <div className="flex-none 2xl:mt-16">
           <ChapterList mangaId={manga.id} />
         </div>
       </div>
