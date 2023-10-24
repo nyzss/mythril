@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useSingleManga } from "../utils/queries";
 import { createCoverUrl } from "../utils/helper";
 import MangaRelations from "../components/Manga/MangaRelations";
+import Button from "../components/Main/Button";
 
 const Manga = () => {
   const { mangaId } = useParams();
@@ -18,10 +19,10 @@ const Manga = () => {
   const title = manga.attributes.title.en;
 
   return (
-    <div className="flex w-full h-full flex-col 2xl:flex-row gap-6 p-8">
+    <div className="flex w-screen h-screen flex-col 2xl:flex-row gap-6 p-8">
       {/* first container */}
-      <div className="flex flex-col w-full h-full dark:bg-secondarydark rounded-md p-4">
-        <div className="flex flex-row gap-6">
+      <div className="flex flex-col w-full h-full dark:bg-secondarydark rounded-md p-6 gap-6 2xl:overflow-auto">
+        <div className="flex flex-col lg:flex-row gap-6">
           {/* img here */}
           <div className="flex overflow-hidden w-72 shrink-0">
             <img
@@ -33,17 +34,27 @@ const Manga = () => {
 
           {/* title */}
           <div className="flex flex-col">
-            <h1 className="pt-2 text-2xl font-bold dark:text-mandy-400">
+            <h1 className="pt-2 text-3xl font-bold dark:text-neutral-100">
               {title}
             </h1>
             <MangaRelations manga={manga} />
           </div>
         </div>
-        <h1>another hello</h1>
-        <h1>yet another hello</h1>
+        {/* buttons */}
+        <div className="flex gap-4">
+          <h1 className="capitalize p-2 text-neutral-700 dark:text-neutral-300">
+            {manga.attributes.status}
+          </h1>
+          {/* maybe add some icons */}
+          <Button>Read First Chapter</Button>
+          <Button variant="secondary">Add to Library</Button>
+        </div>
+        <h1>expand button for more info</h1>
       </div>
       {/* second container  */}
-      <div className="w-full h-full dark:bg-secondarydark rounded-md"></div>
+      <div className="w-full h-full dark:bg-secondarydark rounded-md flex-1 overflow-auto">
+        <h1>do stuff</h1>
+      </div>
     </div>
   );
 };
