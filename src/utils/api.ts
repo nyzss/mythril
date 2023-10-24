@@ -49,14 +49,15 @@ const fetchMangas = async (): Promise<TManga[]> => {
       return res;
     });
 
-  const fetchFnBrowser = await fetch(fetchUrl)
-    .then((res: any) => res.json())
-    .then((res: any) => res.data)
-    .then((res: TManga[]) => res);
+  // const fetchFnBrowser = await fetch(fetchUrl)
+  //   .then((res: any) => res.json())
+  //   .then((res: any) => res.data)
+  //   .then((res: TManga[]) => res);
 
   console.log("this func got called");
 
-  return RUNNING_IN_TAURI ? fetchFnTauri : fetchFnBrowser;
+  // return RUNNING_IN_TAURI ? fetchFnTauri : fetchFnBrowser;
+  return fetchFnTauri;
 };
 
 const fetchSingleManga = async (mangaId: string) => {

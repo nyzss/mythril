@@ -33,16 +33,14 @@ export const relationFilter = (
   relation: Tag[] | Relationship[],
   filter: Group | RelationshipType
 ) => {
+  const tagCheck = (relation: Tag[] | Relationship[]): relation is Tag[] => {
+    return relation.some((rel) => rel.type === "tag");
+  };
+
   if (tagCheck(relation))
     return relation.filter((el) => el.attributes.group === filter);
 
   return relation.filter((rel) => rel.type === filter);
-};
-
-export const tagCheck = (
-  relation: Tag[] | Relationship[]
-): relation is Tag[] => {
-  return relation.some((rel) => rel.type === "tag");
 };
 
 export const createCoverUrl = (

@@ -1,41 +1,36 @@
 import { Relationship, Tag } from "../../types/manga";
-import { tagCheck } from "../../utils/helper";
-import RelationTag from "./RelationTag";
 
 const Relations = ({
   children,
   relations,
 }: {
-  children: string;
+  children?: string;
   relations: Tag[] | Relationship[];
 }) => {
-  const isTag = tagCheck(relations);
   const isEmpty = !relations.some((rel) => rel.type);
+
   return (
     <ul>
       <h1
-        className={`font-bold text-rose-400 dark:text-rose-500 text-xl ${
-          isEmpty ? "text-neutral-400 dark:text-neutral-500" : ""
+        className={`text-neutral-800 dark:text-neutral-200 text-md ${
+          isEmpty ? "text-neutral-400 dark:text-neutral-700" : ""
         }`}
       >
         {children}
       </h1>
       <div className="flex flex-row gap-2 flex-wrap">
-        {isTag &&
-          relations.map((content) => (
-            <RelationTag key={content.id}>
-              {content.attributes.name.en}
-            </RelationTag>
-          ))}
+        {relations.map((content) => (
+          <li className="cursor-pointer" key={content.id}>
+            <span className="bg-mandy-100 text-mandy-800-800 text-sm font-medium mr-2 px-2 py-0.5 rounded dark:bg-rose-200/80 transition-colors duration-300 dark:hover:bg-rose-300 dark:text-neutral-950 whitespace-nowrap">
+              {content.type === "tag"
+                ? content.attributes.name.en
+                : content.attributes?.name}
+            </span>
+          </li>
+        ))}
         {isEmpty && (
-          <h1 className="text-neutral-400 dark:text-neutral-600">N/A</h1>
+          <h1 className="text-neutral-400 dark:text-neutral-700">N/A</h1>
         )}
-        {!isTag &&
-          relations.map((content) => (
-            <RelationTag key={content.id}>
-              {content.attributes?.name}
-            </RelationTag>
-          ))}
       </div>
     </ul>
   );

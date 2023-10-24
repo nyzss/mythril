@@ -15,20 +15,17 @@ const MangaRelations = ({ manga }: { manga: TManga }) => {
   const author = relationFilter(relationships, "author");
 
   return (
-    <>
-      <Relations relations={contents}>Contents</Relations>
-      <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
-      <div className="flex flex-row gap-2">
+    <div className="flex flex-col pt-3 gap-6 flex-wrap">
+      <Relations relations={genres} />
+      <div className="flex flex-row gap-6 flex-wrap">
         <Relations relations={artist}>Artist</Relations>
         <Relations relations={author}>Author</Relations>
+        <Relations relations={themes}>Themes</Relations>
+        <Relations relations={formats}>Formats</Relations>
+        {/* <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" /> */}
       </div>
-      <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
-      <Relations relations={genres}>Genres</Relations>
-      <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
-      <Relations relations={themes}>Themes</Relations>
-      <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
-      <Relations relations={formats}>Formats</Relations>
-    </>
+      <Relations relations={contents}>Contents</Relations>
+    </div>
   );
 };
 
