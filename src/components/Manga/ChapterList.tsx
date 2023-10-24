@@ -1,9 +1,19 @@
+import { useMemo } from "react";
 import { useChapters } from "../../utils/queries";
 import ChapterItem from "./ChapterItem";
 
 const ChapterList = ({ mangaId }: { mangaId: string }) => {
   const { data: chapters, isLoading } = useChapters(mangaId);
-  if (isLoading) return <>Loading</>;
+
+  if (isLoading) return <h1>Loading...</h1>;
+
+  const sortedChapters = useMemo(
+    () =>
+      chapters?.sort(
+        (a, b) => Number(a.attributes.chapter) - Number(b.attributes.chapter)
+      ),
+    [chapters]
+  );
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -22,14 +32,9 @@ const ChapterList = ({ mangaId }: { mangaId: string }) => {
           </tr>
         </thead>
         <tbody>
-          {chapters
-            ?.sort(
-              (a, b) =>
-                Number(a.attributes.chapter) - Number(b.attributes.chapter)
-            )
-            .map((chapter) => (
-              <ChapterItem chapter={chapter} key={chapter.id} />
-            ))}
+          {sortedChapters?.map((chapter) => (
+            <ChapterItem chapter={chapter} key={chapter.id} />
+          ))}
         </tbody>
       </table>
     </div>

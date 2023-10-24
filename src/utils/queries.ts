@@ -1,25 +1,32 @@
-import { useQuery } from "@tanstack/react-query";
+import { QueryClient, useQuery } from "@tanstack/react-query";
 import { fetchMangas, fetchChapters, fetchSingleManga } from "./api";
+import { TManga } from "../types/manga";
 
-const useMangas = () => {
+export const queryClient = new QueryClient();
+
+export const useMangas = () => {
   return useQuery({
     queryKey: ["mangas"],
     queryFn: fetchMangas,
   });
 };
 
-const useSingleManga = (mangaId: string) => {
-  return useQuery({
+export const useSingleManga = (mangaId: string) => {
+  return useQuery<TManga>({
     queryKey: ["mangas", mangaId],
     queryFn: () => fetchSingleManga(mangaId),
+    initialData: () => {
+      const allMangas = queryClient.getQueryData(["mangas"]) as TManga[];
+      const id = allMangas?.find((manga) => manga.id === mangaId);
+      if (!id) return;
+      return id;
+    },
   });
 };
 
-const useChapters = (mangaId: string) => {
+export const useChapters = (mangaId: string) => {
   return useQuery({
     queryKey: ["chapters", mangaId],
     queryFn: () => fetchChapters(mangaId),
   });
 };
-
-export { useMangas, useChapters, useSingleManga };
