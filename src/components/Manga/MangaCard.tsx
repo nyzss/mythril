@@ -3,19 +3,7 @@ import { TManga } from "../../types/manga";
 import { createCoverUrl } from "../../utils/helper";
 
 const MangaCard = ({ manga }: { manga: TManga }) => {
-  const coverRelation = manga.relationships.find(
-    (el) => el.type === "cover_art"
-  );
-
-  const placeholderImg = "https://placehold.co/400x600";
-
-  const coverUrl = coverRelation?.attributes?.fileName
-    ? createCoverUrl({
-        mangaId: manga.id,
-        coverFileName: coverRelation?.attributes?.fileName,
-        resolution: "low",
-      })
-    : placeholderImg;
+  const coverUrl = createCoverUrl(manga, "low");
 
   return (
     <Link

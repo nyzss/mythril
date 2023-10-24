@@ -1,4 +1,10 @@
-import { Group, Relationship, RelationshipType, Tag } from "../types/manga";
+import {
+  Group,
+  Relationship,
+  RelationshipType,
+  TManga,
+  Tag,
+} from "../types/manga";
 import { Config, CoverResolution } from "../types/types";
 
 // export const RUNNING_IN_TAURI = window.__TAURI__ !== undefined;
@@ -23,28 +29,6 @@ export const createFetchUrl = (config: Config) => {
   return fetchUrl;
 };
 
-export const createCoverUrl = ({
-  mangaId,
-  coverFileName,
-  resolution = "original",
-}: {
-  mangaId: string;
-  coverFileName: string;
-  resolution: CoverResolution;
-}): string => {
-  const baseUrl = "https://uploads.mangadex.org/covers";
-
-  //check if the resolution is original, if not then it matches it to medium (512) or low (256) respectively.
-  const coverRes =
-    resolution === "original"
-      ? ""
-      : `.${resolution === "medium" ? "512" : "256"}.jpg`;
-
-  const coverUrl = `${baseUrl}/${mangaId}/${coverFileName}${coverRes}`;
-
-  return coverUrl;
-};
-
 export const relationFilter = (
   relation: Tag[] | Relationship[],
   filter: Group | RelationshipType
@@ -59,4 +43,29 @@ export const tagCheck = (
   relation: Tag[] | Relationship[]
 ): relation is Tag[] => {
   return relation.some((rel) => rel.type === "tag");
+};
+
+export const createCoverUrl = (
+  manga: TManga,
+  resolution: CoverResolution
+): string => {
+  const placeholderImg = "/placeholder.jpg";
+
+  const coverRelation = manga.relationships.find(
+    (rel) => rel.type === "cover_art"
+  );
+  // returns placeholder image if there is no cover or coverAttribute is not found.
+  if (!coverRelation || !coverRelation.attributes?.fileName)
+    return placeholderImg;
+
+  const baseCoverUrl = "https://uploads.mangadex.org/covers";
+
+  const coverRes =
+    resolution === "original"
+      ? ""
+      : `.${resolution === "medium" ? "512" : "256"}.jpg`;
+
+  const coverUrl = `${baseCoverUrl}/${manga.id}/${coverRelation.attributes?.fileName}${coverRes}`;
+
+  return coverUrl;
 };

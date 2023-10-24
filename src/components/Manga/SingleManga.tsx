@@ -6,21 +6,10 @@ import ChapterList from "./ChapterList";
 
 const SingleManga = ({ manga }: { manga: TManga }) => {
   if (!manga) return <>Loading...</>;
-  const coverRelation = manga.relationships.find(
-    (el) => el.type === "cover_art"
-  );
-
-  const placeholderImg = "https://placehold.co/400x600";
 
   const attributes = manga.attributes;
 
-  const coverUrl = coverRelation?.attributes?.fileName
-    ? createCoverUrl({
-        mangaId: manga.id,
-        coverFileName: coverRelation?.attributes?.fileName,
-        resolution: "original",
-      })
-    : placeholderImg;
+  const coverUrl = createCoverUrl(manga, "original");
 
   return (
     <div className="py-8">
