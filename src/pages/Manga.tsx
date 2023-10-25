@@ -3,6 +3,8 @@ import { useSingleManga } from "../utils/queries";
 import { createCoverUrl } from "../utils/helper";
 import MangaRelations from "../components/Manga/MangaRelations";
 import Button from "../components/Main/Button";
+import Markdown from "react-markdown";
+import ChapterList from "../components/Manga/ChapterList";
 
 const Manga = () => {
   const { mangaId } = useParams();
@@ -19,9 +21,9 @@ const Manga = () => {
   const title = manga.attributes.title.en;
 
   return (
-    <div className="flex w-screen h-screen flex-col 2xl:flex-row gap-6 p-8">
+    <div className="flex w-full h-full flex-col 2xl:flex-row gap-6 p-8">
       {/* first container */}
-      <div className="flex flex-col w-full h-full dark:bg-secondarydark rounded-md p-6 gap-6 2xl:overflow-auto">
+      <div className="flex flex-col 2xl:w-full 2xl:h-full dark:bg-secondarydark rounded-md p-6 gap-6 2xl:overflow-auto">
         <div className="flex flex-col lg:flex-row gap-6">
           {/* img here */}
           <div className="flex overflow-hidden w-72 shrink-0">
@@ -49,11 +51,21 @@ const Manga = () => {
           <Button>Read First Chapter</Button>
           <Button variant="secondary">Add to Library</Button>
         </div>
+
+        <div className="space-y-2">
+          <h2 className="text-primarydark dark:text-rose-200 text-xl font-bold">
+            Description
+          </h2>
+          <Markdown className="prose dark:prose-invert">
+            {manga.attributes.description.en}
+          </Markdown>
+        </div>
         <h1>expand button for more info</h1>
       </div>
       {/* second container  */}
-      <div className="w-full h-full dark:bg-secondarydark rounded-md flex-1 overflow-auto">
-        <h1>do stuff</h1>
+      <div className="w-full h-full dark:bg-secondarydark rounded-md overflow-auto">
+        <div>a couple of buttons up here</div>
+        <ChapterList mangaId={manga.id} />
       </div>
     </div>
   );
