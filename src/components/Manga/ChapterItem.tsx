@@ -3,22 +3,20 @@ import { TChapter } from "../../types/chapter";
 const ChapterItem = ({ chapter }: { chapter: TChapter }) => {
   const title = chapter.attributes.title;
   const index = chapter.attributes.chapter;
-  const scanGroups = chapter.relationships.filter(
-    (rel) => rel.type === "scanlation_group"
-  );
-  const scanGroupsNames = scanGroups.map((groups) => groups.attributes?.name);
+  const groups = chapter.relationships.map((rel) => {
+    if (rel.type === "scanlation_group") return rel.attributes?.name;
+  });
 
   return (
-    <tr className="border-b dark:border-neutral-700 text-neutral-950 dark:text-neutral-200 bg-gray-50 dark:bg-neutral-950/50 even:dark:bg-rose-300/20 cursor-pointer dark:hover:bg-neutral-950 dark:even:hover:bg-rose-300/40">
-      <th
-        scope="row"
-        className="px-6 py-4 font-medium text-neutraL-900 whitespace-nowrap dark:text-white"
-      >
+    <tr className="dark:bg-neutral-900 even:dark:bg-neutral-950/10 border-2 dark:border-neutral-700 rounded-md">
+      <th scope="row" className="px-6 py-4 text-center">
         {index}
       </th>
-      <td className="px-6 py-4">{title || "N/A"}</td>
-      <td className="px-6 py-4">
-        {scanGroupsNames ? scanGroupsNames : "No Group"}
+      <td className="px-6 py-4 text-center">{title}</td>
+      <td className="px-6 py-4 text-center space-x-2">
+        {groups.map((group) => (
+          <span key={group}>{group}</span>
+        ))}
       </td>
     </tr>
   );

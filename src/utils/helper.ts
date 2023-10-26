@@ -67,3 +67,18 @@ export const createCoverUrl = (
 
   return coverUrl;
 };
+
+export const getFlag = (countryCode: string) => {
+  if (countryCode.length !== 2) return;
+  const codePoints = countryCode
+    .toUpperCase()
+    .split("")
+    .map((char) => {
+      return 127397 + char.codePointAt(0)!;
+    });
+
+  const code = String.fromCodePoint(...codePoints);
+  // console.log(code, codePoints);
+
+  return code;
+};

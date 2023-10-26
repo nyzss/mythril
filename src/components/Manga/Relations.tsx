@@ -9,13 +9,11 @@ const Relations = ({
 }) => {
   const isEmpty = !relations.some((rel) => rel.type);
 
+  if (isEmpty) return <></>;
+
   return (
     <ul>
-      <h1
-        className={`text-neutral-800 dark:text-neutral-200 text-md ${
-          isEmpty ? "text-neutral-400 dark:text-neutral-700" : ""
-        }`}
-      >
+      <h1 className="text-neutral-800 dark:text-neutral-200 text-md">
         {children}
       </h1>
       <div className="flex flex-row gap-2 flex-wrap">
@@ -28,9 +26,6 @@ const Relations = ({
             </span>
           </li>
         ))}
-        {isEmpty && (
-          <h1 className="text-neutral-400 dark:text-neutral-700">N/A</h1>
-        )}
       </div>
     </ul>
   );

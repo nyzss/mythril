@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useSingleManga } from "../utils/queries";
-import { createCoverUrl } from "../utils/helper";
+import { createCoverUrl, getFlag } from "../utils/helper";
 import MangaRelations from "../components/Manga/MangaRelations";
 import Button from "../components/Main/Button";
 import Markdown from "react-markdown";
@@ -20,10 +20,12 @@ const Manga = () => {
   // do a function to have a prioritized title
   const title = manga.attributes.title.en;
 
+  const flag = getFlag(manga.attributes.originalLanguage);
+
   return (
     <div className="flex w-full h-full flex-col 2xl:flex-row gap-6 p-8">
       {/* first container */}
-      <div className="flex flex-col 2xl:w-full 2xl:h-full dark:bg-secondarydark rounded-md p-6 gap-6 2xl:overflow-auto">
+      <div className="flex flex-col w-full 2xl:h-full dark:bg-secondarydark rounded-md p-6 gap-6 2xl:overflow-auto">
         <div className="flex flex-col lg:flex-row gap-6">
           {/* img here */}
           <div className="flex overflow-hidden w-72 shrink-0">
@@ -37,7 +39,11 @@ const Manga = () => {
           {/* title */}
           <div className="flex flex-col">
             <h1 className="pt-2 text-3xl font-bold dark:text-neutral-100">
-              {title}
+              {title}{" "}
+              <span role="img" aria-label="flag">
+                {flag}
+              </span>
+              <span>{}</span>
             </h1>
             <MangaRelations manga={manga} />
           </div>
@@ -63,8 +69,11 @@ const Manga = () => {
         <h1>expand button for more info</h1>
       </div>
       {/* second container  */}
-      <div className="w-full h-full dark:bg-secondarydark rounded-md overflow-auto">
-        <div>a couple of buttons up here</div>
+      <div className="w-full 2xl:h-full dark:bg-secondarydark rounded-md 2xl:overflow-auto p-6">
+        <div className="flex gap-3 p-4">
+          <Button>first button</Button>
+          <Button>second button</Button>
+        </div>
         <ChapterList mangaId={manga.id} />
       </div>
     </div>
