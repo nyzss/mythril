@@ -1,3 +1,5 @@
+import { TranslatedLanguage } from "./chapter";
+
 export interface TManga {
   id: string;
   type: RelationshipType;
@@ -24,10 +26,9 @@ export interface MangaAttributes {
   createdAt: Date;
   updatedAt: Date;
   version: number;
-  availableTranslatedLanguages: Array<null | string>;
+  availableTranslatedLanguages: TranslatedLanguage[] | null;
   latestUploadedChapter: string;
 }
-
 export interface AltTitle {
   ja?: string;
   en?: string;

@@ -1,7 +1,7 @@
 import { useSetAtom } from "jotai";
-import { colorModeAtom } from "../../utils/atoms";
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { userPreferencesAtom } from "../../utils/atoms";
 
 const Settings = ({ children }: { children: React.ReactNode }) => {
   let [isOpen, setIsOpen] = useState(false);
@@ -13,10 +13,14 @@ const Settings = ({ children }: { children: React.ReactNode }) => {
   function openModal() {
     setIsOpen(true);
   }
-  const setColorMode = useSetAtom(colorModeAtom);
+  const setUserPreferences = useSetAtom(userPreferencesAtom);
 
   const toggleColorMode = () => {
-    setColorMode((prev) => (prev === "dark" ? "light" : "dark"));
+    setUserPreferences((prev) =>
+      prev.colorMode === "dark"
+        ? { ...prev, colorMode: "light" }
+        : { ...prev, colorMode: "dark" }
+    );
   };
 
   return (

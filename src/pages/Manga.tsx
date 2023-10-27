@@ -5,6 +5,7 @@ import MangaRelations from "../components/Manga/MangaRelations";
 import Button from "../components/Main/Button";
 import Markdown from "react-markdown";
 import ChapterList from "../components/Manga/ChapterList";
+import LanguageList from "../components/Manga/LanguageList";
 
 const Manga = () => {
   const { mangaId } = useParams();
@@ -21,6 +22,7 @@ const Manga = () => {
   const title = manga.attributes.title.en;
 
   const flag = getFlag(manga.attributes.originalLanguage);
+  const translatedLanguage = manga.attributes.availableTranslatedLanguages!;
 
   return (
     <div className="flex w-full h-full flex-col 2xl:flex-row gap-6 p-8">
@@ -69,10 +71,11 @@ const Manga = () => {
         <h1>expand button for more info</h1>
       </div>
       {/* second container  */}
-      <div className="w-full 2xl:h-full dark:bg-secondarydark rounded-md 2xl:overflow-auto p-6">
-        <div className="flex gap-3 p-4">
+      <div className="w-full 2xl:h-full dark:bg-secondarydark rounded-md 2xl:overflow-auto px-8">
+        <div className="flex gap-3 pt-6 pb-4 px-8 w-full sticky top-0 bg-neutral-100/10 dark:bg-neutral-900/10 backdrop-blur-sm">
           <Button>first button</Button>
           <Button>second button</Button>
+          <LanguageList list={translatedLanguage} />
         </div>
         <ChapterList mangaId={manga.id} />
       </div>

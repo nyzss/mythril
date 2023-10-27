@@ -1,13 +1,13 @@
 import MainNav from "./components/Navigation/MainNav";
 import { Routes, Route } from "react-router-dom";
 import { useAtomValue } from "jotai";
-import { colorModeAtom } from "./utils/atoms";
+import { userPreferencesAtom } from "./utils/atoms";
 import routes from "./utils/Routes";
 import { useEffect } from "react";
 
 //
 const App = () => {
-  const colorMode = useAtomValue(colorModeAtom);
+  const { colorMode } = useAtomValue(userPreferencesAtom);
 
   useEffect(() => {
     if (colorMode === "dark") document.documentElement.classList.add("dark");

@@ -1,10 +1,19 @@
+import { useAtomValue } from "jotai";
 import { useChapters } from "../../utils/queries";
 import ChapterItem from "./ChapterItem";
+import { userPreferencesAtom } from "../../utils/atoms";
 
 const ChapterList = ({ mangaId }: { mangaId: string }) => {
   const { data: chapters, isLoading } = useChapters(mangaId);
-
+  const { preferredLanguage } = useAtomValue(userPreferencesAtom);
+  // true for debug
   if (isLoading) return <h1>Loading...</h1>;
+
+  const filteredChap = chapters?.filter((chap) => {
+    return chap.attributes.translatedLanguage === preferredLanguage;
+  });
+
+  const chap = preferredLanguage ? filteredChap : chapters;
 
   return (
     <table className="w-full">
@@ -18,7 +27,7 @@ const ChapterList = ({ mangaId }: { mangaId: string }) => {
         </tr>
       </thead>
       <tbody>
-        {chapters?.map((chap) => (
+        {chap?.map((chap) => (
           <ChapterItem key={chap.id} chapter={chap} />
         ))}
       </tbody>
