@@ -11,7 +11,7 @@ import { Config, CoverResolution } from "../types/types";
 export const RUNNING_IN_TAURI = "__TAURI_METADATA__" in window;
 
 export const createFetchUrl = (config: Config) => {
-  const { url, limit, offset, contentRating, includes } = config;
+  const { url, limit, offset, contentRating, includes, order } = config;
 
   const includesValue = includes
     ? `&includes[]=${includes.join("&includes[]=")}`
@@ -21,10 +21,22 @@ export const createFetchUrl = (config: Config) => {
     ? `&contentRating[]=${contentRating.join("&contentRating[]=")}`
     : "";
 
+  const orderValue = (): string => {
+    if (!order) return "";
+
+    const orderList: string[] = [];
+
+    for (const [orderBy, value] of Object.entries(order)) {
+      const v = `&order[${orderBy}]=${value}`;
+      orderList.push(v);
+    }
+    return orderList.join();
+  };
+
   const limitValue = limit ? `&limit=${limit}` : "";
   const offsetValue = offset ? `&offset=${offset}` : "";
 
-  const fetchUrl = `${url}?${includesValue}${contentRatingValue}${limitValue}${offsetValue}`;
+  const fetchUrl = `${url}?${includesValue}${contentRatingValue}${limitValue}${offsetValue}${orderValue()}`;
 
   return fetchUrl;
 };

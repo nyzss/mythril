@@ -27,7 +27,7 @@ const LanguageList = ({ list }: { list: TranslatedLanguage[] }) => {
       <div className="relative">
         <Listbox.Options className="bg-neutral-100 dark:bg-neutral-900 absolute border-2 border-neutral-950 dark:border-neutral-600 rounded-md">
           <Listbox.Option
-            value={undefined}
+            value={null}
             disabled={!list}
             className="px-6 py-4 flex justify-center items-center dark:bg-neutral-950/30 rounded-lg hover:bg-rose-400/50  cursor-pointer"
           >

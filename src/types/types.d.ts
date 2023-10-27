@@ -26,10 +26,32 @@ export interface Config {
   offset?: number;
   includes?: RelationshipType[] | ChapterRelationshipType[];
   contentRating?: ContentRating[];
+  order?: MangaOrder | ChapterOrder;
 }
+
+export interface ChapterOrder {
+  chapter?: OrderEnum;
+  volume?: OrderEnum;
+  createdAt?: OrderEnum;
+  updatedAt?: OrderEnum;
+  publishAt?: OrderEnum;
+  readableAt?: OrderEnum;
+}
+
+export interface MangaOrder {
+  title?: OrderEnum;
+  year?: OrderEnum;
+  createdAt?: OrderEnum;
+  updatedAt?: OrderEnum;
+  latestUploadedChapter?: OrderEnum;
+  followedCount?: OrderEnum;
+  relevance?: OrderEnum;
+}
+
+export type OrderEnum = "asc" | "desc";
 
 export interface UserPreferences {
   interfaceLanguage?: string;
-  preferredLanguage?: TranslatedLanguage;
+  preferredLanguage?: TranslatedLanguage | null;
   colorMode?: ColorMode;
 }

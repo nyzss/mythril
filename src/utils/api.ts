@@ -84,6 +84,9 @@ const fetchChapters = async (mangaId: string): Promise<TChapter[]> => {
   const fetchUrl = createFetchUrl({
     url: baseUrl,
     includes: ["scanlation_group"],
+    order: {
+      chapter: "asc",
+    },
   });
 
   console.log("fetchChapters called");

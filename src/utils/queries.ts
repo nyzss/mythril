@@ -1,9 +1,6 @@
 import { QueryClient, useQuery } from "@tanstack/react-query";
 import { fetchMangas, fetchChapters, fetchSingleManga } from "./api";
 import { TManga } from "../types/manga";
-import { useCallback } from "react";
-import { TChapter } from "../types/chapter";
-
 export const queryClient = new QueryClient();
 
 export const useMangas = () => {
@@ -30,12 +27,5 @@ export const useChapters = (mangaId: string) => {
   return useQuery({
     queryKey: ["chapters", mangaId],
     queryFn: () => fetchChapters(mangaId),
-    select: useCallback(
-      (data: TChapter[]) =>
-        data.sort(
-          (a, b) => Number(a.attributes.chapter) - Number(b.attributes.chapter)
-        ),
-      []
-    ),
   });
 };
