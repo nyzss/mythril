@@ -299,7 +299,7 @@ export interface FluffyAltTitle {
   "es-la"?: string;
 }
 
-export enum PurpleOriginalLanguage {
+export enum PurpleOriginaluage {
   En = "en",
   Fr = "fr",
   ID = "id",
@@ -325,15 +325,15 @@ export interface Biography {
   zh?: string;
 }
 
-export enum Role {
-  RoleContributor = "ROLE_CONTRIBUTOR",
-  RoleForumModerator = "ROLE_FORUM_MODERATOR",
-  RoleGlobalModerator = "ROLE_GLOBAL_MODERATOR",
-  RoleGroupLeader = "ROLE_GROUP_LEADER",
-  RoleGroupMember = "ROLE_GROUP_MEMBER",
-  RoleMdAtHome = "ROLE_MD_AT_HOME",
-  RoleMember = "ROLE_MEMBER",
-  RolePowerUploader = "ROLE_POWER_UPLOADER",
-  RoleStaff = "ROLE_STAFF",
-  RoleUser = "ROLE_USER",
-}
+export type Role =
+  | "ROLE_CONTRIBUTOR"
+  | "ROLE_FORUM_MODERATOR"
+  | "ROLE_GLOBAL_MODERATOR"
+  | "ROLE_GROUP_LEADER"
+  | "ROLE_GROUP_MEMBER"
+  | "ROLE_MD_AT_HOME"
+  | "ROLE_MEMBER"
+  | "ROLE_POWER_UPLOADER"
+  | "ROLE_STAFF"
+  | "ROLE_USER"
+  | "ROLE_VIP";

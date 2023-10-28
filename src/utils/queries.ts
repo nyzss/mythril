@@ -1,5 +1,11 @@
 import { QueryClient, useQuery } from "@tanstack/react-query";
-import { fetchMangas, fetchChapters, fetchSingleManga } from "./api";
+import {
+  fetchMangas,
+  fetchChapters,
+  fetchSingleManga,
+  fetchChapterImages,
+  fetchSingleChapter,
+} from "./api";
 import { TManga } from "../types/manga";
 export const queryClient = new QueryClient();
 
@@ -27,5 +33,19 @@ export const useChapters = (mangaId: string) => {
   return useQuery({
     queryKey: ["chapters", mangaId],
     queryFn: () => fetchChapters(mangaId),
+  });
+};
+
+export const useChapter = (chapterId: string) => {
+  return useQuery({
+    queryKey: ["chapter", chapterId],
+    queryFn: () => fetchSingleChapter(chapterId),
+  });
+};
+
+export const useChapterImages = (chapterId: string) => {
+  return useQuery({
+    queryKey: ["chapterImg", chapterId],
+    queryFn: () => fetchChapterImages(chapterId),
   });
 };

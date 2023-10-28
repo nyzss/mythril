@@ -1,4 +1,4 @@
-import { AltTitle } from "./manga";
+import { AltTitle, MangaAttributes, Role, TManga } from "./manga";
 
 export interface TChapter {
   id: string;
@@ -29,7 +29,12 @@ export interface Relationship {
   attributes?: RelationshipAttributes;
 }
 
-export interface RelationshipAttributes {
+export interface RelationshipAttributes
+  extends ScanGroupAttributes,
+    UserAttributes,
+    MangaAttributes {}
+
+export interface ScanGroupAttributes {
   name: string;
   altNames: AltTitle[];
   locked: boolean;
@@ -49,6 +54,12 @@ export interface RelationshipAttributes {
   exLicensed?: boolean;
   createdAt: Date;
   updatedAt: Date;
+  version: number;
+}
+
+export interface UserAttributes {
+  username: string;
+  roles: Role[];
   version: number;
 }
 

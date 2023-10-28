@@ -3,6 +3,7 @@ import { TManga } from "../types/manga";
 import { RUNNING_IN_TAURI, createFetchUrl } from "./helper";
 import { TChapter } from "../types/chapter";
 import { Config } from "../types/types";
+import { ChapterImages } from "../types/chapterImages";
 
 const bai = "https://bai-hwge.onrender.com";
 const baseApi = "https://api.mangadex.org";
@@ -13,7 +14,7 @@ const userAgent = { "User-Agent": "Mythril / 0.1" };
 
 const defaultConfig: Config = {
   url: apiUrl,
-  limit: 20,
+  limit: 50,
   offset: 0,
   contentRating: [],
   includes: [],
@@ -25,7 +26,7 @@ const fetchConfig: FetchOptions = {
   headers: userAgent,
 };
 
-const fetchMangas = async (): Promise<TManga[]> => {
+export const fetchMangas = async (): Promise<TManga[]> => {
   const baseUrl = `${apiUrl}/manga`;
   const config: Config = {
     ...defaultConfig,
@@ -60,7 +61,7 @@ const fetchMangas = async (): Promise<TManga[]> => {
   return fetchFnTauri;
 };
 
-const fetchSingleManga = async (mangaId: string) => {
+export const fetchSingleManga = async (mangaId: string) => {
   const baseUrl = `${apiUrl}/manga/${mangaId}`;
 
   console.log("fetchSingleManga called");
@@ -78,7 +79,7 @@ const fetchSingleManga = async (mangaId: string) => {
     });
 };
 
-const fetchChapters = async (mangaId: string): Promise<TChapter[]> => {
+export const fetchChapters = async (mangaId: string): Promise<TChapter[]> => {
   const baseUrl = `${apiUrl}/manga/${mangaId}/feed`;
 
   const fetchUrl = createFetchUrl({
@@ -91,11 +92,7 @@ const fetchChapters = async (mangaId: string): Promise<TChapter[]> => {
 
   console.log("fetchChapters called");
 
-  return await fetchTauri(fetchUrl, {
-    method: "GET",
-    timeout: 30,
-    headers: userAgent,
-  })
+  return await fetchTauri(fetchUrl, fetchConfig)
     .then((res: any) => res.data.data)
     .then((res: TChapter[]) => {
       console.log(res);
@@ -103,4 +100,26 @@ const fetchChapters = async (mangaId: string): Promise<TChapter[]> => {
     });
 };
 
-export { fetchMangas, fetchChapters, fetchSingleManga };
+export const fetchChapterImages = async (
+  chapterId: string
+): Promise<ChapterImages> => {
+  const baseUrl = `${apiUrl}/at-home/server/${chapterId}`;
+
+  return await fetchTauri(baseUrl, fetchConfig)
+    .then((res: any) => res.data)
+    .then((res: ChapterImages) => {
+      console.log(res);
+      return res;
+    });
+};
+
+export const fetchSingleChapter = async (
+  chapterId: string
+): Promise<TChapter> => {
+  const baseUrl = `${apiUrl}/chapter/${chapterId}`;
+  const fetchUrl = createFetchUrl({ url: baseUrl, includes: ["manga"] });
+
+  return await fetchTauri(fetchUrl, fetchConfig)
+    .then((res: any) => res.data)
+    .then((res: TChapter) => res);
+};
