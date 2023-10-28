@@ -9,9 +9,9 @@ export type CoverResolution = "original" | "medium" | "low";
 export interface TRoutes {
   name: string;
   path: string;
-  element: ReactNode;
+  element?: ReactNode;
   index: number;
-  icon: LucideIcon;
+  icon?: LucideIcon;
   child?: Child;
 }
 

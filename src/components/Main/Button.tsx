@@ -1,15 +1,15 @@
-import React from "react";
+import { forwardRef } from "react";
 
-const Button = ({
-  children,
-  variant = "primary",
-  ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  children: React.ReactNode;
-  variant?: "primary" | "secondary";
-}) => {
+const Button = forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<"button"> & {
+    children: React.ReactNode;
+    variant?: "primary" | "secondary";
+  }
+>(({ children, variant = "primary", ...props }, ref) => {
   return (
     <button
+      ref={ref}
       {...props}
       className={`px-6 py-2 rounded-md shadow-md drop-shadow-shadow  dark:drop-shadow-glow  ${
         variant === "primary"
@@ -20,6 +20,6 @@ const Button = ({
       {children}
     </button>
   );
-};
+});
 
 export default Button;

@@ -7,6 +7,7 @@ import Home from "../pages/Home";
 import Library from "../pages/Library";
 import Manga from "../pages/Manga";
 import { TRoutes } from "../types/types";
+import Chapter from "../pages/Chapter";
 
 const routes: TRoutes[] = [
   {
@@ -30,6 +31,15 @@ const routes: TRoutes[] = [
     element: <Home />,
     index: 3,
     icon: Newspaper,
+  },
+  {
+    name: "Chapter",
+    path: "/chapter",
+    index: 4,
+    child: {
+      element: <Chapter />,
+      param: ":chapterId",
+    },
   },
 ];
 

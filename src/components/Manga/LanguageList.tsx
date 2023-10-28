@@ -16,13 +16,11 @@ const LanguageList = ({ list }: { list: TranslatedLanguage[] }) => {
 
   return (
     <Listbox value={user.preferredLanguage} onChange={setLanguage}>
-      <Listbox.Button>
-        <Button variant="secondary" className="flex flex-row">
-          {currentLanguage || "language"}
-          <span>
-            <ChevronDown />
-          </span>
-        </Button>
+      <Listbox.Button as={Button} variant="secondary" className="flex flex-row">
+        {currentLanguage || "language"}
+        <span>
+          <ChevronDown />
+        </span>
       </Listbox.Button>
       <div className="relative">
         <Listbox.Options className="bg-neutral-100 dark:bg-neutral-900 absolute border-2 border-neutral-950 dark:border-neutral-600 rounded-md">

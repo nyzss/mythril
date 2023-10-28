@@ -1,10 +1,4 @@
-import {
-  Group,
-  Relationship,
-  RelationshipType,
-  TManga,
-  Tag,
-} from "../types/manga";
+import { Group, RelationshipType, TManga } from "../types/manga";
 import { Config, CoverResolution } from "../types/types";
 
 // export const RUNNING_IN_TAURI = window.__TAURI__ !== undefined;
@@ -42,17 +36,34 @@ export const createFetchUrl = (config: Config) => {
 };
 
 export const relationFilter = (
-  relation: Tag[] | Relationship[],
-  filter: Group | RelationshipType
+  manga: TManga
+  // filter: Group | RelationshipType
 ) => {
-  const tagCheck = (relation: Tag[] | Relationship[]): relation is Tag[] => {
-    return relation.some((rel) => rel.type === "tag");
+  const tags = manga.attributes.tags;
+  const relations = manga.relationships;
+  // const genres = relationFilter(tags, "genre");
+
+  const filterTag = (type: Group) =>
+    tags.filter((tag) => tag.attributes.group === type);
+  const filterRelations = (type: RelationshipType) =>
+    relations.filter((rel) => rel.type === type);
+
+  const themes = filterTag("theme");
+  const formats = filterTag("format");
+  const contents = filterTag("content");
+
+  const artist = filterRelations("artist");
+  const author = filterRelations("author");
+
+  const genres = filterTag("genre");
+  return {
+    genres,
+    themes,
+    formats,
+    contents,
+    artist,
+    author,
   };
-
-  if (tagCheck(relation))
-    return relation.filter((el) => el.attributes.group === filter);
-
-  return relation.filter((rel) => rel.type === filter);
 };
 
 export const createCoverUrl = (

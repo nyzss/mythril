@@ -3,19 +3,11 @@ import { relationFilter } from "../../utils/helper";
 import { TManga } from "../../types/manga";
 
 const MangaRelations = ({ manga }: { manga: TManga }) => {
-  const tags = manga.attributes.tags;
-  const relationships = manga.relationships;
-
-  const genres = relationFilter(tags, "genre");
-  const themes = relationFilter(tags, "theme");
-  const formats = relationFilter(tags, "format");
-  const contents = relationFilter(tags, "content");
-
-  const artist = relationFilter(relationships, "artist");
-  const author = relationFilter(relationships, "author");
+  const { genres, artist, author, themes, formats, contents } =
+    relationFilter(manga);
 
   return (
-    <div className="flex flex-col pt-3 gap-6 flex-wrap">
+    <div className="flex flex-col pt-3 gap-6">
       <Relations relations={genres} />
       <div className="flex flex-row gap-6 flex-wrap">
         <Relations relations={artist}>Artist</Relations>

@@ -15,11 +15,18 @@ const Sidebar = () => {
 
         <ul className="mt-6 space-y-3">
           <h1>search bar here after</h1>
-          {routes.map((route) => (
-            <SidebarItem key={route.index} path={route.path} Icon={route.icon}>
-              {route.name}
-            </SidebarItem>
-          ))}
+          {routes.map((route) => {
+            if (!route.icon) return;
+            return (
+              <SidebarItem
+                key={route.index}
+                path={route.path}
+                Icon={route.icon}
+              >
+                {route.name}
+              </SidebarItem>
+            );
+          })}
         </ul>
       </div>
 
