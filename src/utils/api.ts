@@ -12,7 +12,7 @@ const apiUrl = RUNNING_IN_TAURI ? baseApi : `${bai}/${baseApi}`;
 
 const userAgent = { "User-Agent": "Mythril / 0.1" };
 
-const defaultConfig: Config = {
+export const defaultConfig: Config = {
   url: apiUrl,
   limit: 50,
   offset: 0,
@@ -34,31 +34,26 @@ export const fetchMangas = async (): Promise<TManga[]> => {
     contentRating: ["safe"],
     url: baseUrl,
   };
-  console.log("fetchMangas called");
-
-  console.log(RUNNING_IN_TAURI);
 
   const fetchUrl = createFetchUrl(config);
 
-  const fetchFnTauri = await fetchTauri(fetchUrl, fetchConfig)
-    .then((res: any) => {
-      console.log(res);
-      return res.data.data;
-    })
-    .then((res: TManga[]) => {
-      console.log(res);
-      return res;
-    });
+  // console.log("fetchMangas called");
 
-  // const fetchFnBrowser = await fetch(fetchUrl)
-  //   .then((res: any) => res.json())
-  //   .then((res: any) => res.data)
-  //   .then((res: TManga[]) => res);
+  if (RUNNING_IN_TAURI)
+    return await fetchTauri(fetchUrl, fetchConfig)
+      .then((res: any) => {
+        console.log(res);
+        return res.data.data;
+      })
+      .then((res: TManga[]) => {
+        console.log(res);
+        return res;
+      });
 
-  console.log("this func got called");
-
-  // return RUNNING_IN_TAURI ? fetchFnTauri : fetchFnBrowser;
-  return fetchFnTauri;
+  const response = await fetch(fetchUrl);
+  const json = await response.json();
+  const data: TManga[] = await json.data;
+  return data;
 };
 
 export const fetchSingleManga = async (mangaId: string) => {
@@ -71,12 +66,18 @@ export const fetchSingleManga = async (mangaId: string) => {
     includes: ["cover_art", "artist", "author", "creator"],
   });
 
-  return await fetchTauri(fetchUrl, fetchConfig)
-    .then((res: any) => res.data.data)
-    .then((res: TManga) => {
-      console.log(res);
-      return res;
-    });
+  if (RUNNING_IN_TAURI)
+    return await fetchTauri(fetchUrl, fetchConfig)
+      .then((res: any) => res.data.data)
+      .then((res: TManga) => {
+        console.log(res);
+        return res;
+      });
+
+  const response = await fetch(fetchUrl);
+  const json = await response.json();
+  const data: TManga = await json.data;
+  return data;
 };
 
 export const fetchChapters = async (mangaId: string): Promise<TChapter[]> => {
@@ -92,25 +93,18 @@ export const fetchChapters = async (mangaId: string): Promise<TChapter[]> => {
 
   console.log("fetchChapters called");
 
-  return await fetchTauri(fetchUrl, fetchConfig)
-    .then((res: any) => res.data.data)
-    .then((res: TChapter[]) => {
-      console.log(res);
-      return res;
-    });
-};
+  if (RUNNING_IN_TAURI)
+    return await fetchTauri(fetchUrl, fetchConfig)
+      .then((res: any) => res.data.data)
+      .then((res: TChapter[]) => {
+        console.log(res);
+        return res;
+      });
 
-export const fetchChapterImages = async (
-  chapterId: string
-): Promise<ChapterImages> => {
-  const baseUrl = `${apiUrl}/at-home/server/${chapterId}`;
-
-  return await fetchTauri(baseUrl, fetchConfig)
-    .then((res: any) => res.data)
-    .then((res: ChapterImages) => {
-      console.log(res);
-      return res;
-    });
+  const response = await fetch(fetchUrl);
+  const json = await response.json();
+  const data: TChapter[] = await json.data;
+  return data;
 };
 
 export const fetchSingleChapter = async (
@@ -119,7 +113,34 @@ export const fetchSingleChapter = async (
   const baseUrl = `${apiUrl}/chapter/${chapterId}`;
   const fetchUrl = createFetchUrl({ url: baseUrl, includes: ["manga"] });
 
-  return await fetchTauri(fetchUrl, fetchConfig)
-    .then((res: any) => res.data)
-    .then((res: TChapter) => res);
+  if (RUNNING_IN_TAURI)
+    return await fetchTauri(fetchUrl, fetchConfig)
+      .then((res: any) => res.data)
+      .then((res: TChapter) => res);
+
+  const response = await fetch(fetchUrl);
+  const json = await response.json();
+  const data: TChapter = await json.data;
+  return data;
+};
+
+export const fetchChapterImages = async (
+  chapterId: string
+): Promise<ChapterImages> => {
+  const fetchUrl = `${apiUrl}/at-home/server/${chapterId}`;
+  console.log(fetchUrl);
+
+  if (RUNNING_IN_TAURI)
+    return await fetchTauri(fetchUrl, fetchConfig)
+      .then((res: any) => res.data)
+      .then((res: ChapterImages) => {
+        console.log(res);
+        return res;
+      });
+
+  const response = await fetch(fetchUrl);
+  const data = await response.json();
+  console.log(data);
+  // console.log("HERE: Chapter Images", data);
+  return data;
 };
