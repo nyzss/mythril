@@ -10,9 +10,11 @@ COPY . .
 
 RUN npm run build
 
+RUN npm install --global serve
+
 EXPOSE 8080
 
-CMD [ "npm", "run", "preview" ]
+CMD [ "serve", "-p", "8080" ]
 
 # FROM node:21-alpine as BUILD_IMAGE
 
