@@ -5,7 +5,7 @@ import { TChapter } from "../types/chapter";
 import { Config } from "../types/types";
 import { ChapterImages } from "../types/chapterImages";
 
-const bai = "https://bai-hwge.onrender.com";
+const bai = "https://api.nascent.dev";
 const baseApi = "https://api.mangadex.org";
 
 const apiUrl = RUNNING_IN_TAURI ? baseApi : `${bai}/${baseApi}`;
