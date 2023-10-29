@@ -5,10 +5,10 @@ import { TChapter } from "../types/chapter";
 import { Config } from "../types/types";
 import { ChapterImages } from "../types/chapterImages";
 
-export const proxyUrl = "https://api.nascent.dev";
+const bai = "https://api.nascent.dev";
 const baseApi = "https://api.mangadex.org";
 
-const apiUrl = RUNNING_IN_TAURI ? baseApi : `${proxyUrl}/${baseApi}`;
+const apiUrl = RUNNING_IN_TAURI ? baseApi : `${bai}/${baseApi}`;
 
 const userAgent = { "User-Agent": "Mythril / 0.1" };
 
