@@ -1,5 +1,6 @@
 import { Group, RelationshipType, TManga } from "../types/manga";
 import { Config, CoverResolution } from "../types/types";
+import { proxyUrl } from "./api";
 
 // export const RUNNING_IN_TAURI = window.__TAURI__ !== undefined;
 export const RUNNING_IN_TAURI = "__TAURI_METADATA__" in window;
@@ -79,7 +80,7 @@ export const createCoverUrl = (
   if (!coverRelation || !coverRelation.attributes?.fileName)
     return placeholderImg;
 
-  const baseCoverUrl = "https://uploads.mangadex.org/covers";
+  const baseCoverUrl = createUrl("https://uploads.mangadex.org/covers");
 
   const coverRes =
     resolution === "original"
@@ -89,6 +90,10 @@ export const createCoverUrl = (
   const coverUrl = `${baseCoverUrl}/${manga.id}/${coverRelation.attributes?.fileName}${coverRes}`;
 
   return coverUrl;
+};
+
+export const createUrl = (url: string) => {
+  return RUNNING_IN_TAURI ? url : `${proxyUrl}/${url}`;
 };
 
 export const getFlag = (countryCode: string) => {

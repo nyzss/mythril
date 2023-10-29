@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useChapterImages } from "../utils/queries";
+import { createUrl } from "../utils/helper";
 
 const Chapter = () => {
   const { chapterId } = useParams();
@@ -22,7 +23,7 @@ const Chapter = () => {
       <div className="flex flex-col gap-2 justify-center items-center">
         {images?.map((image, index) => (
           <img
-            src={`${baseUrl}/data/${hash}/${image}`}
+            src={createUrl(`${baseUrl}/data/${hash}/${image}`)}
             className="max-w-6xl"
             key={index}
             alt="chapter image"
