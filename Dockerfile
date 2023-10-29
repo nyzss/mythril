@@ -1,28 +1,44 @@
-FROM node:21-alpine as BUILD_IMAGE
+FROM node:21-alpine
 
-WORKDIR /mythril
+WORKDIR /app/mythril
 
 COPY package.json .
 
 RUN npm install
 
-COPY . . 
+COPY . .
 
 RUN npm run build
 
+EXPOSE 8080
+
+CMD [ "npm", "run", "preview" ]
+
+# FROM node:21-alpine as BUILD_IMAGE
+
+# WORKDIR /mythril
+
+# COPY package.json .
+
+# RUN npm install
+
+# COPY . . 
+
+# RUN npm run build
+
+# # EXPOSE 4000
+# # CMD ["npm", "start"]
+
+# FROM node:21-alpine as PRODUCTION_IMAGE
+
+# WORKDIR /mythril
+
+# COPY --from=BUILD_IMAGE /mythril/dist/ /mythril/dist/
+
 # EXPOSE 4000
-# CMD ["npm", "start"]
 
-FROM node:21-alpine as PRODUCTION_IMAGE
+# COPY . . 
 
-WORKDIR /mythril
+# RUN npm install typescript
 
-COPY --from=BUILD_IMAGE /mythril/dist/ /mythril/dist/
-
-EXPOSE 4000
-
-COPY . . 
-
-RUN npm install typescript
-
-CMD ["npm", "run", "preview"]
+# CMD ["npm", "run", "preview"]

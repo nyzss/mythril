@@ -10,9 +10,16 @@ export default defineConfig(async () => ({
   // 1. prevent vite from obscuring rust errors
   clearScreen: false,
   // 2. tauri expects a fixed port, fail if that port is not available
+  preview: {
+    port: 8080,
+    strictPort: true,
+    host: true,
+    origin: "http://0.0.0.0:8080",
+  },
   server: {
     host: true,
-    port: 4000,
+    port: 8080,
+    origin: "http://0.0.0.0:8080",
     strictPort: true,
   },
   // 3. to make use of `TAURI_DEBUG` and other env variables
