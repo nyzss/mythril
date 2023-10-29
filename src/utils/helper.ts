@@ -1,6 +1,5 @@
 import { Group, RelationshipType, TManga } from "../types/manga";
 import { Config, CoverResolution } from "../types/types";
-import { proxyUrl } from "./api";
 
 // export const RUNNING_IN_TAURI = window.__TAURI__ !== undefined;
 export const RUNNING_IN_TAURI = "__TAURI_METADATA__" in window;
