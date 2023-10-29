@@ -14,7 +14,7 @@ RUN npm install --global serve
 
 EXPOSE 8080
 
-CMD [ "serve", "-p", "8080" ]
+CMD [ "serve", "dist/", "-p", "8080" ]
 
 # FROM node:21-alpine as BUILD_IMAGE
 
