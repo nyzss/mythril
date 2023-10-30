@@ -1,8 +1,9 @@
-import { createCoverUrl } from "../../utils/helper";
+import { RUNNING_IN_TAURI, createCoverUrl } from "../../utils/helper";
 import Markdown from "react-markdown";
 import { TManga } from "../../types/manga";
 import MangaRelations from "./MangaRelations";
 import ChapterList from "./ChapterList";
+import { proxyUrl } from "../../utils/api";
 
 const SingleManga = ({ manga }: { manga: TManga }) => {
   if (!manga) return <>Loading...</>;
@@ -10,6 +11,8 @@ const SingleManga = ({ manga }: { manga: TManga }) => {
   const attributes = manga.attributes;
 
   const coverUrl = createCoverUrl(manga, "original");
+  const baseApi = RUNNING_IN_TAURI ? "" : proxyUrl;
+  const finalUrl = `${baseApi}/${coverUrl}`;
 
   return (
     <div className="py-8">
@@ -25,7 +28,7 @@ const SingleManga = ({ manga }: { manga: TManga }) => {
               <div className="mb-4">
                 <img
                   className="rounded-md h-96 mx-auto"
-                  src={coverUrl}
+                  src={finalUrl}
                   alt={manga.attributes.title.en}
                 />
               </div>
