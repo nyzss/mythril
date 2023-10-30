@@ -1,7 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useChapterImages } from "../utils/queries";
-import { RUNNING_IN_TAURI } from "../utils/helper";
-import { proxyUrl } from "../utils/api";
+import { useBrowserUrl, useChapterImages } from "../utils/queries";
 
 const Chapter = () => {
   const { chapterId } = useParams();
@@ -14,7 +12,6 @@ const Chapter = () => {
 
   const images = data?.chapter.data;
 
-  const baseApi = RUNNING_IN_TAURI ? "" : proxyUrl;
   const nextPage = () => {
     console.log("clicked");
     window.scrollBy(0, window.innerHeight);
@@ -25,11 +22,12 @@ const Chapter = () => {
       <div className="flex flex-col gap-2 justify-center items-center">
         {images?.map((image, index) => (
           <img
-            src={`${baseApi}/${baseUrl}/data/${hash}/${image}`}
+            src={useBrowserUrl(`${baseUrl}/data/${hash}/${image}`)}
             className="max-w-6xl"
             key={index}
             alt="chapter image"
             onClick={nextPage}
+            loading="lazy"
           />
         ))}
       </div>

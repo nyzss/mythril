@@ -8,7 +8,7 @@ const Library = () => {
     return <h1 className="text-4xl font-bold text-indigo-800">Loading...</h1>;
 
   return (
-    <main className="flex flex-col p-8 pt-24 gap-10">
+    <main className="h-full w-full flex flex-col p-8 pt-24 gap-10 scroll-smooth overflow-auto">
       <h1 className="text-3xl font-bold">Recently Updated</h1>
       <div className=" flex flex-row flex-wrap content-center gap-8">
         {mangas!.map((manga) => (

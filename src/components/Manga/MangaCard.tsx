@@ -1,13 +1,11 @@
 import { Link } from "react-router-dom";
 import { TManga } from "../../types/manga";
-import { RUNNING_IN_TAURI, createCoverUrl } from "../../utils/helper";
-import { proxyUrl } from "../../utils/api";
+import { createCoverUrl } from "../../utils/helper";
+import { useBrowserUrl } from "../../utils/queries";
 
 const MangaCard = ({ manga }: { manga: TManga }) => {
   const coverUrl = createCoverUrl(manga, "low");
-
-  const baseApi = RUNNING_IN_TAURI ? "" : proxyUrl;
-  const finalUrl = `${baseApi}/${coverUrl}`;
+  const finalUrl = useBrowserUrl(coverUrl);
   return (
     <Link
       to={"/library/" + manga.id}
@@ -17,6 +15,7 @@ const MangaCard = ({ manga }: { manga: TManga }) => {
         src={finalUrl}
         className="rounded-md shrink-0 w-full h-full object-cover"
         alt={manga.attributes.title.en}
+        loading="lazy"
       />
       <div className="opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black/80 rounded-md absolute bottom-0 px-4 py-3 w-full h-full flex justify-center items-center">
         <h1 className="text-neutral-50 font-semibold text-2xl">

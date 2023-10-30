@@ -2,7 +2,7 @@
   "build": {
     "beforeDevCommand": "pnpm dev",
     "beforeBuildCommand": "pnpm build",
-    "devPath": "http://localhost:4000",
+    "devPath": "http://localhost:8080",
     "distDir": "../dist",
     "withGlobalTauri": false
   },
@@ -20,7 +20,7 @@
       "http": {
         "all": true,
         "request": true,
-        "scope": ["https://api.mangadex.org/*"]
+        "scope": ["https://api.mangadex.org/*", "https://api.nascent.dev/*"]
       },
       "window": {
         "all": false,

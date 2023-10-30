@@ -5,8 +5,10 @@ import {
   fetchSingleManga,
   fetchChapterImages,
   fetchSingleChapter,
+  proxyUrl,
 } from "./api";
 import { TManga } from "../types/manga";
+import { RUNNING_IN_TAURI } from "./helper";
 export const queryClient = new QueryClient();
 
 export const useMangas = () => {
@@ -48,4 +50,8 @@ export const useChapterImages = (chapterId: string) => {
     queryKey: ["chapterImg", chapterId],
     queryFn: () => fetchChapterImages(chapterId),
   });
+};
+
+export const useBrowserUrl = (url: string) => {
+  return RUNNING_IN_TAURI ? url : `${proxyUrl}/${url}`;
 };

@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useSingleManga } from "../utils/queries";
+import { useBrowserUrl, useSingleManga } from "../utils/queries";
 import { createCoverUrl, getFlag } from "../utils/helper";
 import MangaRelations from "../components/Manga/MangaRelations";
 import Button from "../components/Main/Button";
@@ -15,6 +15,7 @@ const Manga = () => {
   if (!manga) return <>Error!</>;
 
   const coverUrl = createCoverUrl(manga, "medium");
+  const finalUrl = useBrowserUrl(coverUrl);
 
   if (isLoading) return <>Loading...</>;
 
@@ -25,14 +26,14 @@ const Manga = () => {
   const translatedLanguage = manga.attributes.availableTranslatedLanguages!;
 
   return (
-    <div className="flex w-full h-full flex-col 2xl:flex-row gap-6 p-8">
+    <div className="flex w-full h-full flex-col 2xl:flex-row gap-6 p-8 2xl:overflow-hidden">
       {/* first container */}
-      <div className="flex flex-col w-full 2xl:h-full dark:bg-secondarydark rounded-md p-6 gap-6 2xl:overflow-auto">
+      <div className="flex flex-col w-full 2xl:h-full dark:bg-secondarydark rounded-md p-6 gap-6 2xl:overflow-auto ">
         <div className="flex flex-col lg:flex-row gap-6">
           {/* img here */}
           <div className="flex overflow-hidden w-72 shrink-0">
             <img
-              src={coverUrl}
+              src={finalUrl}
               alt={title}
               className="rounded-md shrink-0 object-cover w-full h-full"
             />
@@ -72,7 +73,7 @@ const Manga = () => {
       </div>
       {/* second container  */}
       <div className="w-full 2xl:h-full dark:bg-secondarydark rounded-md 2xl:overflow-auto px-8">
-        <div className="flex gap-3 pt-6 pb-4 px-8 w-full sticky top-0 bg-neutral-100/10 dark:bg-neutral-900/10 backdrop-blur-sm">
+        <div className="flex gap-3 pt-6 pb-4 px-8 w-full sticky top-0 backdrop-blur-md bg-neutral-100/10 dark:bg-neutral-900/90">
           <Button>first button</Button>
           <Button>second button</Button>
           <LanguageList list={translatedLanguage} />
