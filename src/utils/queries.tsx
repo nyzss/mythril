@@ -10,6 +10,7 @@ import {
 import { TManga } from "../types/manga";
 import { RUNNING_IN_TAURI } from "./helper";
 import { useEffect, useRef } from "react";
+import { Config } from "../types/types";
 export const queryClient = new QueryClient();
 
 export const useMangas = () => {
@@ -32,10 +33,10 @@ export const useSingleManga = (mangaId: string) => {
   });
 };
 
-export const useChapters = (mangaId: string) => {
+export const useChapters = (options: Config) => {
   return useQuery({
-    queryKey: ["chapters", mangaId],
-    queryFn: () => fetchChapters(mangaId),
+    queryKey: ["chapters", options.id],
+    queryFn: () => fetchChapters(options),
   });
 };
 

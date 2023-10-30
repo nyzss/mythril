@@ -5,7 +5,15 @@ import { Config, CoverResolution } from "../types/types";
 export const RUNNING_IN_TAURI = "__TAURI_METADATA__" in window;
 
 export const createFetchUrl = (config: Config) => {
-  const { url, limit, offset, contentRating, includes, order } = config;
+  const {
+    url,
+    limit,
+    offset,
+    contentRating,
+    includes,
+    order,
+    translatedLanguage,
+  } = config;
 
   const includesValue = includes
     ? `&includes[]=${includes.join("&includes[]=")}`
@@ -13,6 +21,12 @@ export const createFetchUrl = (config: Config) => {
 
   const contentRatingValue = contentRating
     ? `&contentRating[]=${contentRating.join("&contentRating[]=")}`
+    : "";
+
+  const translantedLanguageValue = translatedLanguage
+    ? `&translatedLanguage[]=${translatedLanguage.join(
+        "&translatedLanguage[]="
+      )}`
     : "";
 
   const orderValue = (): string => {
@@ -30,7 +44,7 @@ export const createFetchUrl = (config: Config) => {
   const limitValue = limit ? `&limit=${limit}` : "";
   const offsetValue = offset ? `&offset=${offset}` : "";
 
-  const fetchUrl = `${url}?${includesValue}${contentRatingValue}${limitValue}${offsetValue}${orderValue()}`;
+  const fetchUrl = `${url}?${includesValue}${contentRatingValue}${limitValue}${offsetValue}${orderValue()}${translantedLanguageValue}`;
 
   return fetchUrl;
 };

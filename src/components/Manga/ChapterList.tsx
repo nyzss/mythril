@@ -4,9 +4,12 @@ import ChapterItem from "./ChapterItem";
 import { userPreferencesAtom } from "../../utils/atoms";
 
 const ChapterList = ({ mangaId }: { mangaId: string }) => {
-  const { data: chapters, isLoading } = useChapters(mangaId);
+  const { data: chapters, isLoading } = useChapters({
+    id: mangaId,
+    includes: ["scanlation_group"],
+  });
   const { preferredLanguage } = useAtomValue(userPreferencesAtom);
-  // true for debug
+
   if (isLoading) return <h1>Loading...</h1>;
 
   const filteredChap = chapters?.filter((chap) => {

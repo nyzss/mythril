@@ -80,18 +80,16 @@ export const fetchSingleManga = async (mangaId: string) => {
   return data;
 };
 
-export const fetchChapters = async (mangaId: string): Promise<TChapter[]> => {
-  const baseUrl = `${apiUrl}/manga/${mangaId}/feed`;
+export const fetchChapters = async (options: Config): Promise<TChapter[]> => {
+  const baseUrl = `${apiUrl}/manga/${options.id}/feed`;
 
   const fetchUrl = createFetchUrl({
+    ...options,
     url: baseUrl,
-    includes: ["scanlation_group"],
     order: {
       chapter: "asc",
     },
   });
-
-  console.log("fetchChapters called");
 
   if (RUNNING_IN_TAURI)
     return await fetchTauri(fetchUrl, fetchConfig)
@@ -104,6 +102,7 @@ export const fetchChapters = async (mangaId: string): Promise<TChapter[]> => {
   const response = await fetch(fetchUrl);
   const json = await response.json();
   const data: TChapter[] = await json.data;
+  console.log(data);
   return data;
 };
 
@@ -121,6 +120,7 @@ export const fetchSingleChapter = async (
   const response = await fetch(fetchUrl);
   const json = await response.json();
   const data: TChapter = await json.data;
+  console.log(data);
   return data;
 };
 
@@ -128,7 +128,6 @@ export const fetchChapterImages = async (
   chapterId: string
 ): Promise<ChapterImages> => {
   const fetchUrl = `${apiUrl}/at-home/server/${chapterId}`;
-  console.log(fetchUrl);
 
   if (RUNNING_IN_TAURI)
     return await fetchTauri(fetchUrl, fetchConfig)
@@ -140,7 +139,6 @@ export const fetchChapterImages = async (
 
   const response = await fetch(fetchUrl);
   const data = await response.json();
-  console.log(data);
   // console.log("HERE: Chapter Images", data);
   return data;
 };

@@ -21,12 +21,14 @@ export interface Child {
 }
 
 export interface Config {
-  url: string;
+  url?: string;
+  id?: string;
   limit?: number;
   offset?: number;
   includes?: RelationshipType[] | ChapterRelationshipType[];
   contentRating?: ContentRating[];
   order?: MangaOrder | ChapterOrder;
+  translatedLanguage?: TranslatedLanguage[];
 }
 
 export interface ChapterOrder {
