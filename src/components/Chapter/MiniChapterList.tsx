@@ -3,7 +3,6 @@ import { Listbox, Transition } from "@headlessui/react";
 import { Check, ChevronDown } from "lucide-react";
 import { TChapter } from "../../types/chapter";
 import { Link } from "react-router-dom";
-import Button from "../Main/Button";
 
 const MiniChapterList = ({
   chapters,
