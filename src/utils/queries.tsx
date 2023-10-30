@@ -9,6 +9,7 @@ import {
 } from "./api";
 import { TManga } from "../types/manga";
 import { RUNNING_IN_TAURI } from "./helper";
+import { useEffect, useRef } from "react";
 export const queryClient = new QueryClient();
 
 export const useMangas = () => {
@@ -54,4 +55,23 @@ export const useChapterImages = (chapterId: string) => {
 
 export const useBrowserUrl = (url: string) => {
   return RUNNING_IN_TAURI ? url : `${proxyUrl}/${url}`;
+};
+
+export const useOutsideClick = (callback: () => void) => {
+  const ref = useRef<any>(null);
+
+  useEffect(() => {
+    const handleClick = (event: any) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        callback();
+      }
+    };
+    document.addEventListener("click", handleClick, true);
+
+    return () => {
+      document.removeEventListener("click", handleClick, true);
+    };
+  }, [ref]);
+
+  return ref;
 };
