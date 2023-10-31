@@ -4,8 +4,8 @@ import { createCoverUrl, getFlag } from "../utils/helper";
 import MangaRelations from "../components/Manga/MangaRelations";
 import Button from "../components/Main/Button";
 import Markdown from "react-markdown";
-import ChapterList from "../components/Manga/ChapterList";
 import LanguageList from "../components/Manga/LanguageList";
+import ChapterList from "../components/Chapter/ChapterList";
 
 const Manga = () => {
   const { mangaId } = useParams();
@@ -52,7 +52,7 @@ const Manga = () => {
           </div>
         </div>
         {/* buttons */}
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-4">
           <h1 className="capitalize p-2 text-neutral-700 dark:text-neutral-300">
             {manga.attributes.status}
           </h1>
@@ -73,11 +73,12 @@ const Manga = () => {
       </div>
       {/* second container  */}
       <div className="w-full 2xl:h-full dark:bg-secondarydark rounded-md 2xl:overflow-auto px-8">
-        <div className="flex gap-3 pt-6 pb-4 px-8 w-full sticky top-0 backdrop-blur-md bg-neutral-100/10 dark:bg-neutral-900/90">
-          <Button>first button</Button>
-          <Button>second button</Button>
+        <div className="flex gap-3 pt-6 pb-4 px-8 w-full sticky top-0 backdrop-blur-md flex-wrap flex-col lg:flex-row bg-neutral-100/10 dark:bg-neutral-900/90">
+          {/* <Button>first button</Button>
+          <Button>second button</Button> */}
           <LanguageList list={translatedLanguage} />
         </div>
+        {/* <ChapterList mangaId={manga.id} /> */}
         <ChapterList mangaId={manga.id} />
       </div>
     </div>

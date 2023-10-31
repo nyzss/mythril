@@ -139,6 +139,5 @@ export const fetchChapterImages = async (
 
   const response = await fetch(fetchUrl);
   const data = await response.json();
-  // console.log("HERE: Chapter Images", data);
   return data;
 };

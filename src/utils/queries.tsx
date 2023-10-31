@@ -33,10 +33,11 @@ export const useSingleManga = (mangaId: string) => {
   });
 };
 
-export const useChapters = (options: Config) => {
+export const useChapters = (options: Config, enabled: boolean = true) => {
   return useQuery({
     queryKey: ["chapters", options.id],
     queryFn: () => fetchChapters(options),
+    enabled,
   });
 };
 

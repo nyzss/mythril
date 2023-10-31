@@ -16,19 +16,22 @@ const Chapter = () => {
   const { data: chapterImg } = useChapterImages(chapterId);
   const { data: chapterData } = useChapter(chapterId);
 
-  const baseUrl = chapterImg?.baseUrl;
-  const hash = chapterImg?.chapter.hash;
-
-  const images = chapterImg?.chapter.data;
-
   const mangaData = chapterData?.relationships.filter(
     (rel) => rel.type === "manga"
   )[0];
 
-  const { data: allChapters } = useChapters({
-    id: mangaData?.id,
-    translatedLanguage: [chapterData?.attributes.translatedLanguage!],
-  });
+  const { data: allChapters } = useChapters(
+    {
+      id: mangaData?.id,
+      translatedLanguage: [chapterData?.attributes.translatedLanguage!],
+    },
+    !!mangaData?.id
+  );
+
+  const baseUrl = chapterImg?.baseUrl;
+  const hash = chapterImg?.chapter.hash;
+
+  const images = chapterImg?.chapter.data;
 
   const handleNextChapter = () => {
     const i = allChapters?.findIndex((chap) => chap.id === chapterId);

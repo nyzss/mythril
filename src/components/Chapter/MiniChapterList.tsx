@@ -12,8 +12,14 @@ const MiniChapterList = ({
   current: string;
 }) => {
   if (!chapters) return <>Loading...</>;
+
   const currentSelected = chapters.find((chap) => chap.id === current);
   const [selected, setSelected] = useState(currentSelected || chapters[0]);
+
+  // filters out the chapters that lead to external sites.
+  let filteredChapters = chapters.filter(
+    (chap) => chap.attributes.pages > 0 && chap.attributes.externalUrl === null
+  );
 
   return (
     <div className="w-36">
@@ -35,7 +41,7 @@ const MiniChapterList = ({
             leaveTo="opacity-0"
           >
             <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white dark:bg-neutral-800 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-              {chapters.map((chapter) => (
+              {filteredChapters.map((chapter) => (
                 <Link to={"/chapter/" + chapter.id} key={chapter.id}>
                   <Listbox.Option
                     className={({ active }) =>
