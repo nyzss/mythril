@@ -4,17 +4,21 @@ WORKDIR /app/mythril
 
 COPY package.json .
 
-RUN npm install
+RUN npm install -g pnpm
+
+RUN pnpm install
 
 COPY . .
 
-RUN npm run build
+RUN pnpm run build
 
-RUN npm install --global serve
+
+# RUN npm install --global serve
 
 EXPOSE 8080
+CMD ["pnpm", "preview"]
 
-CMD [ "serve", "dist/", "-p", "8080" ]
+# CMD [ "serve", "dist/", "-p", "8080" ]
 
 # FROM node:21-alpine as BUILD_IMAGE
 

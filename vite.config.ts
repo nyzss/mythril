@@ -4,7 +4,6 @@ import react from "@vitejs/plugin-react";
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
   plugins: [react()],
-
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   //
   // 1. prevent vite from obscuring rust errors
@@ -16,6 +15,7 @@ export default defineConfig(async () => ({
     host: true,
     origin: "http://0.0.0.0:8080",
   },
+
   server: {
     host: true,
     port: 8080,
