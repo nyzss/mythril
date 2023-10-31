@@ -30,7 +30,7 @@ const TitleBar = () => {
           // onMouseDown={() => appWindow.startDragging()}
           data-tauri-drag-region
         >
-          mythril
+          nascent
         </div>
         <Action action={() => appWindow.minimize()}>
           <Minus />

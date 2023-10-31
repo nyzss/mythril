@@ -5,6 +5,9 @@ import SidebarProfile from "./SidebarProfile";
 import { Menu } from "lucide-react";
 import { useState } from "react";
 import { useOutsideClick } from "../../utils/queries";
+import SearchField from "./SearchField";
+import { Link } from "react-router-dom";
+import Logo from "../Main/Logo";
 
 const Sidebar = () => {
   const [showSideBar, setShowSideBar] = useState<boolean>(false);
@@ -35,15 +38,13 @@ const Sidebar = () => {
         }`}
       >
         <div className="px-4 py-6">
-          {/* <Link
-          to={"/"}
-          className="grid h-10 w-32 place-content-center rounded-lg text-xl text-neutral-950 dark:text-rose-200 font-bold cursor-pointer"
-        >
-          Mythril
-        </Link> */}
+          <Link to="/" className="">
+            <Logo />
+            {/* <Logo2 /> */}
+          </Link>
 
+          <SearchField />
           <ul className="mt-6 space-y-3" onClick={handleShow}>
-            <h1>search bar here after</h1>
             {routes.map((route) => {
               if (!route.icon) return;
               return (
