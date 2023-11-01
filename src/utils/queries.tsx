@@ -6,11 +6,12 @@ import {
   fetchChapterImages,
   fetchSingleChapter,
   proxyUrl,
+  searchMangas,
 } from "./api";
 import { TManga } from "../types/manga";
 import { RUNNING_IN_TAURI } from "./helper";
 import { useEffect, useRef } from "react";
-import { Config } from "../types/types";
+import { Config, MangaQueryParams } from "../types/types";
 export const queryClient = new QueryClient();
 
 export const useMangas = () => {
@@ -52,6 +53,13 @@ export const useChapterImages = (chapterId: string) => {
   return useQuery({
     queryKey: ["chapterImg", chapterId],
     queryFn: () => fetchChapterImages(chapterId),
+  });
+};
+
+export const useSearchMangas = (options: MangaQueryParams) => {
+  return useQuery({
+    queryKey: ["searchMangas"],
+    queryFn: () => searchMangas(options),
   });
 };
 

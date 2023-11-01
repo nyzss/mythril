@@ -26,7 +26,7 @@ const Sidebar = () => {
 
       <div
         // ref={ref}
-        className={`min-w-[18rem] lg:sticky top-0 flex flex-col justify-between border-e bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-950 dark:text-gray-100 select-none transition-all invisible fixed lg:visible ${
+        className={`min-w-[18rem] lg:sticky top-0 flex flex-col justify-between border-e bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-950 dark:text-gray-100 select-none transition-all opacity-0 fixed lg:opacity-100 ${
           showSideBar ? "opacity-100 w-64 h-full z-30" : ""
         }`}
       >

@@ -2,8 +2,9 @@ import { FetchOptions, fetch as fetchTauri } from "@tauri-apps/api/http";
 import { TManga } from "../types/manga";
 import { RUNNING_IN_TAURI, createFetchUrl } from "./helper";
 import { TChapter } from "../types/chapter";
-import { Config } from "../types/types";
+import { Config, MangaQueryParams } from "../types/types";
 import { ChapterImages } from "../types/chapterImages";
+import axios from "axios";
 
 export const proxyUrl = "https://api.nascent.dev";
 const baseApi = "https://api.mangadex.org";
@@ -11,6 +12,11 @@ const baseApi = "https://api.mangadex.org";
 const apiUrl = RUNNING_IN_TAURI ? baseApi : `${proxyUrl}/${baseApi}`;
 
 const userAgent = { "User-Agent": "Mythril / 0.1" };
+
+const client = axios.create({
+  baseURL: apiUrl,
+  headers: { "User-Agent": "Mythril / 0.1" },
+});
 
 export const defaultConfig: Config = {
   url: apiUrl,
@@ -140,4 +146,22 @@ export const fetchChapterImages = async (
   const response = await fetch(fetchUrl);
   const data = await response.json();
   return data;
+};
+
+export const searchMangas = async (
+  options: MangaQueryParams
+): Promise<TManga[]> => {
+  const { title } = options;
+
+  const url = "/manga";
+
+  const response = await client({
+    method: "GET",
+    url,
+    params: {
+      title,
+    },
+  });
+  const mangas: TManga[] = response.data.data;
+  return mangas;
 };

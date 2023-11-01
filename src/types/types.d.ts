@@ -20,15 +20,19 @@ export interface Child {
   param: string;
 }
 
-export interface Config {
-  url?: string;
-  id?: string;
+export type MangaQueryParams = {
   limit?: number;
   offset?: number;
   includes?: RelationshipType[] | ChapterRelationshipType[];
   contentRating?: ContentRating[];
   order?: MangaOrder | ChapterOrder;
   translatedLanguage?: TranslatedLanguage[];
+  title?: string;
+};
+
+export interface Config extends MangaQueryParams {
+  url?: string;
+  id?: string;
 }
 
 export interface ChapterOrder {

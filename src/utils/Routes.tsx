@@ -8,6 +8,7 @@ import Library from "../pages/Library";
 import Manga from "../pages/Manga";
 import { TRoutes } from "../types/types";
 import Chapter from "../pages/Chapter";
+import Search from "../pages/Search";
 
 const routes: TRoutes[] = [
   {
@@ -39,6 +40,16 @@ const routes: TRoutes[] = [
     child: {
       element: <Chapter />,
       param: ":chapterId",
+    },
+  },
+  {
+    name: "Search",
+    path: "/search",
+    index: 5,
+    child: {
+      element: <Search />,
+      // might wanna get more details later on such as the language preference, tags, genres and stuff...
+      param: ":params",
     },
   },
 ];
