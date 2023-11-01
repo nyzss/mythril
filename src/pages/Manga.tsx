@@ -1,18 +1,33 @@
-import { useParams } from "react-router-dom";
-import { useBrowserUrl, useSingleManga } from "../utils/queries";
+import { Link, useParams } from "react-router-dom";
+import { useBrowserUrl, useChapters, useSingleManga } from "../utils/queries";
 import { createCoverUrl, getFlag } from "../utils/helper";
 import MangaRelations from "../components/Manga/MangaRelations";
 import Button from "../components/Main/Button";
 import Markdown from "react-markdown";
 import LanguageList from "../components/Manga/LanguageList";
 import ChapterList from "../components/Chapter/ChapterList";
+import { useAtomValue } from "jotai";
+import { userPreferencesAtom } from "../utils/atoms";
 
 const Manga = () => {
   const { mangaId } = useParams();
   if (!mangaId) return <>Couldn't find what you're looking for.</>;
 
+  const { preferredLanguage } = useAtomValue(userPreferencesAtom);
+
   const { data: manga, isLoading } = useSingleManga(mangaId);
   if (!manga) return <>Error!</>;
+
+  const { data: chapters } = useChapters({
+    id: manga.id,
+    includes: ["scanlation_group", "user"],
+  });
+
+  const firstChapter = chapters?.filter((chap) =>
+    chap.attributes.translatedLanguage === preferredLanguage
+      ? preferredLanguage
+      : "en"
+  )[0];
 
   const coverUrl = createCoverUrl(manga, "medium");
   const finalUrl = useBrowserUrl(coverUrl);
@@ -57,8 +72,12 @@ const Manga = () => {
             {manga.attributes.status}
           </h1>
           {/* maybe add some icons */}
-          <Button>Read First Chapter</Button>
-          <Button variant="secondary">Add to Library</Button>
+          <Link to={"/chapter/" + firstChapter?.id}>
+            <Button>Read First Chapter</Button>
+          </Link>
+          <Button variant="secondary" disabled>
+            Add to Library
+          </Button>
         </div>
 
         <div className="space-y-2">
