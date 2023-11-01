@@ -7,6 +7,7 @@ const SearchField = () => {
   const [search, setSearch] = useState<string>("");
   const handleSubmit = () => {
     navigate("/search/" + search);
+    setSearch("");
   };
   return (
     <>
