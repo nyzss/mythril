@@ -11,10 +11,11 @@ const ChapterList = ({ mangaId }: { mangaId: string }) => {
 
   const { preferredLanguage } = useAtomValue(userPreferencesAtom);
 
+  // skeleton in case its loading
   if (isLoading)
     return (
       <div className="flex flex-col gap-3">
-        {[...Array(15).keys()].map((i) => (
+        {[...Array(8).keys()].map((i) => (
           <div
             key={i}
             className="flex flex-row justify-between p-7 bg-neutral-300/60 dark:bg-neutral-800 rounded-md items-center hover:bg-rose-400/20 dark:hover:bg-rose-400/20 animate-pulse"
@@ -27,11 +28,17 @@ const ChapterList = ({ mangaId }: { mangaId: string }) => {
       </div>
     );
 
+  const filteredChapters = preferredLanguage
+    ? chapters?.filter(
+        (chap) => chap.attributes.translatedLanguage === preferredLanguage
+      )
+    : chapters;
+
   return (
     <div className="w-full h-full">
       chapters
       <div className="flex flex-col gap-3">
-        {chapters?.map((chap) => (
+        {filteredChapters?.map((chap) => (
           <ChapterItems key={chap.id} chapter={chap} />
         ))}
       </div>

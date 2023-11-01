@@ -33,7 +33,7 @@ const Sidebar = () => {
         <Menu size={48} />
       </button>
       <div
-        className={`bg-black w-72 transition-[margin-left] ease-in-out duration-500 fixed lg:static top-0 bottom-0 left-0 z-40 ${
+        className={`bg-neutral-100 dark:bg-neutral-950 w-72 transition-[margin-left] ease-in-out duration-500 fixed lg:static top-0 bottom-0 left-0 z-40 ${
           show ? "ml-0" : "-ml-72 lg:ml-0"
         }`}
       >
