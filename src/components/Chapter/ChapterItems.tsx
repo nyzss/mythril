@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { TChapter } from "../../types/chapter";
 import { useMemo } from "react";
+import { ExternalLink } from "lucide-react";
 
 const ChapterItems = ({ chapter }: { chapter: TChapter }) => {
   const relations = useMemo(
@@ -9,13 +10,19 @@ const ChapterItems = ({ chapter }: { chapter: TChapter }) => {
     [chapter]
   );
 
+  const externalChapter: boolean =
+    !!chapter.attributes.externalUrl && chapter.attributes.pages === 0;
+
   return (
     <Link
       to={"/chapter/" + chapter.id}
-      className="flex flex-row justify-between p-3 bg-neutral-200/70 dark:bg-neutral-800 rounded-md items-center hover:bg-rose-400/20 dark:hover:bg-rose-400/20"
+      className={`flex flex-row justify-between p-3 bg-neutral-200/70 dark:bg-neutral-800 rounded-md items-center hover:bg-rose-400/20 dark:hover:bg-rose-400/20`}
     >
-      <h1>{chapter.attributes.chapter}</h1>
-      <h1>{chapter.attributes.title || "N/A"}</h1>
+      <h1>{chapter.attributes.chapter} </h1>
+      <h1 className="flex flex-row gap-3">
+        {externalChapter ? <ExternalLink /> : <></>}
+        {chapter.attributes.title || "N/A"}
+      </h1>
       <div className="flex flex-row gap-2">
         {relations.map((group) => (
           <h1

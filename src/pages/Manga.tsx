@@ -16,12 +16,14 @@ const Manga = () => {
   const { preferredLanguage } = useAtomValue(userPreferencesAtom);
 
   const { data: manga, isLoading } = useSingleManga(mangaId);
-  if (!manga) return <>Error!</>;
 
-  const { data: chapters } = useChapters({
-    id: manga.id,
-    includes: ["scanlation_group", "user"],
-  });
+  const { data: chapters } = useChapters(
+    {
+      id: manga?.id,
+      includes: ["scanlation_group", "user"],
+    },
+    !!manga
+  );
 
   const firstChapter = chapters?.filter((chap) =>
     chap.attributes.translatedLanguage === preferredLanguage
@@ -29,17 +31,19 @@ const Manga = () => {
       : "en"
   )[0];
 
-  const coverUrl = createCoverUrl(manga, "medium");
-  const finalUrl = useBrowserUrl(coverUrl);
+  const coverUrl = manga && createCoverUrl(manga, "medium");
+  const finalUrl = coverUrl && useBrowserUrl(coverUrl);
 
   if (isLoading) return <>Loading...</>;
 
   // do a function to have a prioritized title
-  const title = manga.attributes.title.en;
+  const title = manga?.attributes.title.en;
 
-  const flag = getFlag(manga.attributes.originalLanguage);
-  const translatedLanguage = manga.attributes.availableTranslatedLanguages!;
+  const flag = manga && getFlag(manga?.attributes.originalLanguage);
+  const translatedLanguage =
+    manga && manga.attributes.availableTranslatedLanguages!;
 
+  if (isLoading || !manga) return <>Loading!</>;
   return (
     <div className="flex w-full h-full flex-col 2xl:flex-row gap-6 p-8 2xl:overflow-hidden">
       {/* first container */}
@@ -95,7 +99,7 @@ const Manga = () => {
         <div className="flex gap-3 pt-6 pb-4 px-8 w-full sticky top-0 backdrop-blur-md flex-wrap flex-col lg:flex-row bg-neutral-100/10 dark:bg-neutral-900/90">
           {/* <Button>first button</Button>
           <Button>second button</Button> */}
-          <LanguageList list={translatedLanguage} />
+          {translatedLanguage && <LanguageList list={translatedLanguage} />}
         </div>
         {/* <ChapterList mangaId={manga.id} /> */}
         <ChapterList mangaId={manga.id} />

@@ -12,7 +12,7 @@ export interface Attributes {
   chapter: string;
   title: string;
   translatedLanguage: TranslatedLanguage;
-  externalUrl: null;
+  externalUrl: string | null;
   publishAt: Date;
   readableAt: Date;
   createdAt: Date;

@@ -11,10 +11,6 @@ import Logo from "../Main/Logo";
 const Sidebar = () => {
   const [show, setShow] = useState<boolean>(false);
 
-  const handleShow = () => {
-    setShow((prev) => !prev);
-  };
-
   const BackgroundOverlay = () => (
     <div
       className="flex lg:hidden fixed top-0 right-0 bottom-0 left-0 bg-black/50 z-30"
@@ -33,7 +29,7 @@ const Sidebar = () => {
         <Menu size={48} />
       </button>
       <div
-        className={`bg-neutral-100 dark:bg-neutral-950 w-72 transition-[margin-left] ease-in-out duration-500 fixed lg:static top-0 bottom-0 left-0 z-40 ${
+        className={`bg-neutral-100 dark:bg-neutral-950 w-72 transition-[margin-left] ease-in-out duration-500 fixed lg:sticky top-0 bottom-0 left-0 z-40 ${
           show ? "ml-0" : "-ml-72 lg:ml-0"
         }`}
       >

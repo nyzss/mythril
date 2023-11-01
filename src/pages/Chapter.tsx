@@ -65,7 +65,7 @@ const Chapter = () => {
         <h1>hello listbox here</h1>
         <MiniChapterList chapters={allChapters} current={chapterId} />
       </div>
-      <div className="flex flex-col gap-2 justify-center items-center">
+      <div className="h-full flex flex-col gap-2 justify-center items-center">
         <div className="max-w-6xl">
           {images?.map((image, index) => (
             <img
